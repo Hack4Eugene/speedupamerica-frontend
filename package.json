@@ -1,0 +1,27 @@
+{
+  "name": "speedupamerica-frontend",
+  "version": "0.0.1",
+  "description": "V2 Frontend for SpeedUpAmerica",
+  "main": "dist/main.js",
+  "scripts": {
+    "start": "node ./dist/main.js",
+    "start-dev": "nodemon -e ts,js,json -V -L --ignore dist/ --exec 'npm run build && npm start'",
+    "build": "tsc -p .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hack4Eugene/speedupamerica-frontend.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Hack4Eugene/speedupamerica-frontend/issues"
+  },
+  "homepage": "https://github.com/Hack4Eugene/speedupamerica-frontend#readme",
+  "devDependencies": {
+    "nodemon": "^1.19.1",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.2"
+  }
+}
