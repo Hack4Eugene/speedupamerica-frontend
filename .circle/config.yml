@@ -1,0 +1,11 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - iamge: node:12.4.0-alpine
+    steps:
+      - checkout
+      - npm install
+      - npm build
+      - npm lint
+      - npm test

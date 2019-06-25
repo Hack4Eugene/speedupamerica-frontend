@@ -1,4 +1,4 @@
-FROM node:12.4.0
+FROM node:12.4.0-alpine
 
 ENV PORT 8080
 EXPOSE 8080
