@@ -62,3 +62,6 @@ typings/
 
 # typescript build
 dist/
+
+# docker env file
+local.env
