@@ -1,15 +1,15 @@
 version: 2
 jobs:
-  build:
-    docker:
-      - image: node:12.4.0-alpine
-    environment:
-      ENV: test
-    working_directory: ~/speedupamerica-frontend
-    steps:
-      - checkout
-      - run:
-        command: |
-          npm install
-          npm lint     
-          npm test
+    build:
+        docker:
+            - image: node:12.4.0-alpine
+        environment:
+            ENV: test
+        working_directory: ~/speedupamerica-frontend
+        steps:
+            - checkout
+            - run:
+            command: |
+                npm install
+                npm lint     
+                npm test
