@@ -5,7 +5,7 @@
   "main": "dist/main.js",
   "scripts": {
     "start": "node ./dist/main.js",
-    "start-dev": "nodemon -e ts,js,json -L --ignore dist/ --exec 'npm run lint && npm run build && npm start'",
+    "start-dev": "nodemon -e ts,js,json -L --ignore dist/ --exec 'npm run build && npm start'",
     "lint": "./node_modules/.bin/eslint *.json src/**/*.ts",
     "build": "tsc -p .",
     "test": "echo \"No tests yet\" && exit 0"
