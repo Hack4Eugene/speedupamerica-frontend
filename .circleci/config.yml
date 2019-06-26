@@ -9,7 +9,7 @@ jobs:
         steps:
             - checkout
             - run:
-            command: |
-                npm install
-                npm lint     
-                npm test
+                command: |
+                    npm install
+                    npm lint     
+                    npm test
