@@ -8,7 +8,8 @@ jobs:
     working_directory: ~/speedupamerica-frontend
     steps:
       - checkout
-      - run: |
-        npm install
-        npm lint     
-        npm test
+      - run:
+        command: |
+          npm install
+          npm lint     
+          npm test
