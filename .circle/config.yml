@@ -1,11 +1,14 @@
 version: 2
 jobs:
-  build:
+  test:
     docker:
-      - iamge: node:12.4.0-alpine
+      - image: node:12.4.0-alpine
+    environment:
+      ENV: test
+    working_directory: ~/speedupamerica-frontend
     steps:
       - checkout
-      - npm install
-      - npm build
-      - npm lint
-      - npm test
+      - run: |
+        npm install
+        npm lint     
+        npm test
