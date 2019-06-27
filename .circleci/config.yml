@@ -10,7 +10,7 @@ jobs:
             - checkout
             - run:
                 command: |
-                    npm install
+                    npm ci
                     npm run lint  
                     npm run build   
                     npm test
