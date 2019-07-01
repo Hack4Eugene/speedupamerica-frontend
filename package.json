@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./dist/main.js",
     "start-dev": "nodemon -e ts,js,json -L --ignore dist/ --exec 'npm run build && npm start'",
-    "lint": "eslint *.json src/**/*.ts",
+    "lint": "eslint *.json src/**/*.ts test/**/*.ts",
     "build": "tsc -p .",
     "test": "mocha test/*.spec.ts"
   },

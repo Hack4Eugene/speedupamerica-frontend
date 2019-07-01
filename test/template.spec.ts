@@ -1,13 +1,13 @@
 const assert = require('chai').assert;
 
-describe('Test Class Block', () =>  {
+describe('Test Class Block', () => {
   before(() => {
     // runs before all tests in this block
   });
 
   after(() => {
     // runs after all tests in this block
-  })
+  });
 
   beforeEach(() => {
     // runs before each test in this block
