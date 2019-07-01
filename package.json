@@ -8,7 +8,7 @@
     "start-dev": "nodemon -e ts,js,json -L --ignore dist/ --exec 'npm run build && npm start'",
     "lint": "eslint *.json src/**/*.ts",
     "build": "tsc -p .",
-    "test": "echo \"No tests yet\" && exit 0"
+    "test": "mocha test/*.spec.ts"
   },
   "repository": {
     "type": "git",
@@ -22,9 +22,11 @@
   "homepage": "https://github.com/Hack4Eugene/speedupamerica-frontend#readme",
   "devDependencies": {
     "@typescript-eslint/parser": "^1.11.0",
+    "chai": "^4.2.0",
     "eslint": "^6.0.1",
     "eslint-config-google": "^0.13.0",
     "eslint-plugin-json": "^1.4.0",
+    "mocha": "^6.1.4",
     "nodemon": "^1.19.1",
     "ts-node": "^8.3.0",
     "typescript": "^3.5.2"
