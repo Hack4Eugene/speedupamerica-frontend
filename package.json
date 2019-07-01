@@ -21,9 +21,10 @@
   },
   "homepage": "https://github.com/Hack4Eugene/speedupamerica-frontend#readme",
   "devDependencies": {
+    "@types/jasmine": "^3.3.13",
     "@typescript-eslint/parser": "^1.11.0",
     "chai": "^4.2.0",
-    "eslint": "^6.0.1",
+    "eslint": "^5.16.0",
     "eslint-config-google": "^0.13.0",
     "eslint-plugin-json": "^1.4.0",
     "mocha": "^6.1.4",

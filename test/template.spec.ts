@@ -17,7 +17,7 @@ describe('Test Class Block', () =>  {
         // runs after each test in this block
     });
 
-    describe('Test 1 #get_all', () => {
+    describe('Test 1 #get_all', (done) => {
         it('Should get all', (done) => {
             assert(true);
 
