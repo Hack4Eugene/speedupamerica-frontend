@@ -9,8 +9,8 @@ jobs:
     steps:
       - checkout
       - run:
-        command: |
-          npm ci
-          npm run lint  
-          npm run build   
-          npm test
+          command: |
+            npm ci
+            npm run lint
+            npm run build
+            npm test
