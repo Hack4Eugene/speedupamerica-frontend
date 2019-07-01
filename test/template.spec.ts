@@ -1,4 +1,4 @@
-const assert = require('assert');
+const assert = require('chai').assert;
 
 describe('Test Class Block', () =>  {
     before(() => {
@@ -17,7 +17,7 @@ describe('Test Class Block', () =>  {
         // runs after each test in this block
     });
 
-    describe('Test 1 #get_all', (done) => {
+    describe('Test 1 #get_all', () => {
         it('Should get all', (done) => {
             assert(true);
 
