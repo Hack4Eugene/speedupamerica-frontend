@@ -17,3 +17,7 @@ jobs:
       - run:
           name: "Run Mocha and Collect Coverage Reports"
           command: npm run test:circleci
+
+      - store_artifacts:
+          path: coverage
+          destination: coverage
