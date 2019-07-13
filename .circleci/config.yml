@@ -15,6 +15,5 @@ jobs:
             npm run build
             npm test
       - run:
-        name: "Run Mocha and Collect Coverage Reports"
-        command: 
-          npm run test:circleci
+          name: "Run Mocha and Collect Coverage Reports"
+          command: npm run test:circleci
