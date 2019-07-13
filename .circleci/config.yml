@@ -16,4 +16,5 @@ jobs:
             npm test
       - run:
         name: "Run Mocha and Collect Coverage Reports"
-        command: npm run test:circleci
+        command: 
+          npm run test:circleci
