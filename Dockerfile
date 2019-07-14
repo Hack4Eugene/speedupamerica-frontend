@@ -5,6 +5,6 @@ EXPOSE 8080
 
 WORKDIR app
 COPY . .
-RUN npm install
+RUN npm install apk add --no-cache ca-certificates
 
 CMD ["npm", "run", "start-dev"]
