@@ -3,7 +3,7 @@ FROM node:12.4.0-alpine
 ENV PORT 8080
 EXPOSE 8080
 
-WORKDIR app
+WORKDIR /app
 COPY . .
 RUN npm install
 
