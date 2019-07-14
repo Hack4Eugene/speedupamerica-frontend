@@ -9,7 +9,7 @@
     "lint": "eslint *.json src/**/*.ts test/**/*.ts",
     "build": "tsc -p .",
     "test": "mocha test/*.spec.ts",
-    "test:circleci": "nyc --nyc-optional --reporter=text -- npm test",
+    "test:circleci": "nyc --nyc-optional --reporter=lcov --reporter=text -- npm test",
     "test:coverage": "nyc --reporter=html --reporter=text -- npm test",
     "test:clean": "rm -rf .nyc_output/"
   },
