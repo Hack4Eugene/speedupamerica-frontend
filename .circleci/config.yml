@@ -10,7 +10,17 @@ jobs:
       - checkout
       - run:
           command: |
+            apk add --no-cache ca-certificates
+      - run:
+          command: |
             npm ci
             npm run lint
             npm run build
             npm test
+      - run:
+          name: "Run Mocha and Collect Coverage Reports"
+          command: npm run test:coverage
+
+      - store_artifacts:
+          path: coverage
+          destination: coverage
