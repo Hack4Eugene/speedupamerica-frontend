@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: node:12.4.0-alpine
+      - image: node:12.4.0-alpine apk add --no-cache ca-certificates
     environment:
       ENV: test
     working_directory: ~/speedupamerica-frontend
