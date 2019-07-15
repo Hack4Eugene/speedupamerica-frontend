@@ -10,6 +10,9 @@ jobs:
       - checkout
       - run:
           command: |
+            apk add --no-cache ca-certificates
+      - run:
+          command: |
             export DB_HOSTNAME=localhost
             export DB_PORT=3306
             export DB_USERNAME=root
@@ -18,4 +21,7 @@ jobs:
             npm ci
             npm run lint
             npm run build
-            npm test
+            npm run test:coverage
+      - store_artifacts:
+          path: coverage
+          destination: coverage
