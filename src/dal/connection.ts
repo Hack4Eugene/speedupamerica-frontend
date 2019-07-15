@@ -7,7 +7,7 @@ const password = process.env['DB_PASSWORD'];
 const database = process.env['DB_NAME'];
 
 if (!host || !port || !user || !password || !database) {
-  throw new Error('database connection missing');
+  throw new Error('database connection details missing');
 }
 
 const opts = {

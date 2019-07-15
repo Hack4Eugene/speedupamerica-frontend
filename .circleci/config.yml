@@ -10,6 +10,7 @@ jobs:
       - checkout
       - run:
           command: |
+            cp local.env.template local.env
             npm ci
             npm run lint
             npm run build
