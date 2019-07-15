@@ -1,4 +1,4 @@
-const assert = require('chai').assert;
+import {expect} from 'chai';
 
 describe('Test Class Block', () => {
   before(() => {
@@ -18,10 +18,8 @@ describe('Test Class Block', () => {
   });
 
   describe('Test 1 #get_all', () => {
-    it('Should get all', (done) => {
-      assert(true);
-
-      done();
+    it('Should get all', () => {
+      expect(true).to.equal(true);
     });
   });
 });
