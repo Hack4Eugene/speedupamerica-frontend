@@ -10,7 +10,11 @@ jobs:
       - checkout
       - run:
           command: |
-            cp local.env.template local.env
+            export DB_HOSTNAME=localhost
+            export DB_PORT=3306
+            export DB_USERNAME=root
+            export DB_PASSWORD=password
+            export DB_NAME=database
             npm ci
             npm run lint
             npm run build

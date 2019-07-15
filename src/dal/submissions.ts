@@ -1,7 +1,8 @@
 import {pool} from './connection';
 
 async function getCount(): Promise<number> {
-  const [rows] = await pool.query('SELECT count(*) as count FROM submissions');
+  const query = 'SELECT count(*) as count FROM submissions';
+  const [rows] = await pool.query(query);
   return rows[0].count;
 }
 
