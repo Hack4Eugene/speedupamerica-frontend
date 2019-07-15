@@ -31,27 +31,37 @@ describe('DB connection logic', () => {
 
     it('should return error if missing host', async () => {
       delete process.env.DB_HOSTNAME;
-      expect(() => {getConnectionDetails()}).to.throw('database connection details missing');
+      expect(() => {
+        getConnectionDetails();
+      }).to.throw('database connection details missing');
     });
 
     it('should return error if missing port', async () => {
       delete process.env.DB_PORT;
-      expect(() => {getConnectionDetails()}).to.throw('database connection details missing');
+      expect(() => {
+        getConnectionDetails();
+      }).to.throw('database connection details missing');
     });
 
     it('should return error if missing user', async () => {
       delete process.env.DB_USERNAME;
-      expect(() => {getConnectionDetails()}).to.throw('database connection details missing');
+      expect(() => {
+        getConnectionDetails();
+      }).to.throw('database connection details missing');
     });
 
     it('should return error if missing password', async () => {
       delete process.env.DB_PASSWORD;
-      expect(() => {getConnectionDetails()}).to.throw('database connection details missing');
+      expect(() => {
+        getConnectionDetails();
+      }).to.throw('database connection details missing');
     });
 
     it('should return error if missing db name', async () => {
       delete process.env.DB_NAME;
-      expect(() => {getConnectionDetails()}).to.throw('database connection details missing');
+      expect(() => {
+        getConnectionDetails();
+      }).to.throw('database connection details missing');
     });
   });
 });
