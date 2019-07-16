@@ -1,5 +1,5 @@
 import {testConnection} from './dal/test';
-import { logging } from './common/logging';
+import {logging} from './common/logging';
 
 // Temp, just here to demonstrate connection
 // Delete when we setup Express or whatever router we use

@@ -1,4 +1,4 @@
-import {createLogger, format, transports}  from 'winston';
+import {createLogger, format, transports} from 'winston';
 import {getEnv} from '../helper/config';
 const Sentry = require('winston-raven-sentry');
 
@@ -7,7 +7,7 @@ const Sentry = require('winston-raven-sentry');
  * Send logs to Console if message level <= 'error'.
  * Send logs to Sentry if message level is at least 'info'.
  */
-const logging = 
+const logging =
   createLogger({
     level: getEnv() === 'production' ? 'info' : 'debug',
     defaultMeta: {service: 'speedupamerica-frontend'},
@@ -36,4 +36,4 @@ const logging =
     ],
   });
 
-  export {logging};
+export {logging};
