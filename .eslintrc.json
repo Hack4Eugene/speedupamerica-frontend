@@ -14,7 +14,9 @@
     "sourceType": "module"
   },
   "rules": {
-    "require-jsdoc" : 0
+    "require-jsdoc" : 0,
+    "indent": [2, "tab", { "SwitchCase": 1, "VariableDeclarator": 1 }],
+    "translate_tabs_to_spaces": true
   },
   "plugins": [
     "json"
