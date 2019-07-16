@@ -1,4 +1,7 @@
-import {getConnectionDetails} from '../../src/dal/connection';
+import {
+  getConnectionDetails,
+  errMissingConnDetails,
+} from '../../src/dal/connection';
 import {expect} from 'chai';
 
 describe('DB connection logic', () => {
@@ -33,35 +36,35 @@ describe('DB connection logic', () => {
       delete process.env.DB_HOSTNAME;
       expect(() => {
         getConnectionDetails();
-      }).to.throw('database connection details missing');
+      }).to.throw(errMissingConnDetails);
     });
 
     it('should return error if missing port', async () => {
       delete process.env.DB_PORT;
       expect(() => {
         getConnectionDetails();
-      }).to.throw('database connection details missing');
+      }).to.throw(errMissingConnDetails);
     });
 
     it('should return error if missing user', async () => {
       delete process.env.DB_USERNAME;
       expect(() => {
         getConnectionDetails();
-      }).to.throw('database connection details missing');
+      }).to.throw(errMissingConnDetails);
     });
 
     it('should return error if missing password', async () => {
       delete process.env.DB_PASSWORD;
       expect(() => {
         getConnectionDetails();
-      }).to.throw('database connection details missing');
+      }).to.throw(errMissingConnDetails);
     });
 
     it('should return error if missing db name', async () => {
       delete process.env.DB_NAME;
       expect(() => {
         getConnectionDetails();
-      }).to.throw('database connection details missing');
+      }).to.throw(errMissingConnDetails);
     });
   });
 });

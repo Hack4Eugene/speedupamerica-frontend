@@ -1,5 +1,7 @@
 const mysql = require('mysql2/promise');
 
+const errMissingConnDetails = new Error('database connection details missing');
+
 const opts = getConnectionDetails();
 const pool = mysql.createPool(opts);
 
@@ -11,7 +13,7 @@ function getConnectionDetails() {
   const database = process.env['DB_NAME'];
 
   if (!host || !port || !user || !password || !database) {
-    throw new Error('database connection details missing');
+    throw errMissingConnDetails;
   }
 
   return {
@@ -24,4 +26,4 @@ function getConnectionDetails() {
   };
 }
 
-export {pool, getConnectionDetails};
+export {pool, getConnectionDetails, errMissingConnDetails};
