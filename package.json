@@ -6,9 +6,9 @@
   "scripts": {
     "start": "node ./dist/main.js",
     "start-dev": "nodemon -e ts,js,json -L --ignore dist/ --exec 'npm run build && npm start'",
-    "lint": "eslint *.json src/**/*.ts test/**/*.ts",
+    "lint": "eslint *.json src/*.ts src/**/*.ts test/*.spec.ts test/**/*.spec.ts",
     "build": "tsc -p .",
-    "test": "mocha test/*.spec.ts",
+    "test": "mocha -r ts-node/register --require source-map-support/register --recursive test/*.spec.ts test/**/*.spec.ts",
     "test:coverage": "nyc --nyc-optional --reporter=lcov --reporter=text -- npm test",
     "test:clean": "rm -rf .nyc_output/"
   },
@@ -23,8 +23,10 @@
   },
   "homepage": "https://github.com/Hack4Eugene/speedupamerica-frontend#readme",
   "devDependencies": {
+    "@types/chai": "^4.1.7",
     "@types/mocha": "^5.2.7",
-    "@types/node": "^12.0.10",
+    "@types/node": "^12.6.2",
+    "@types/sinon": "^7.0.13",
     "@typescript-eslint/parser": "^1.11.0",
     "chai": "^4.2.0",
     "eslint": "^6.0.1",
@@ -33,18 +35,28 @@
     "mocha": "^6.1.4",
     "nodemon": "^1.19.1",
     "nyc": "^14.1.1",
+    "sinon": "^7.3.2",
+    "source-map-support": "^0.5.12",
     "ts-node": "^8.3.0",
     "typescript": "^3.5.2"
   },
-  "dependencies": {},
-
+  "dependencies": {
+    "mysql2": "^1.6.5"
+  },
   "nyc": {
     "all": true,
+    "extension": [
+      ".ts"
+    ],
     "include": [
-      "test/**.spec.ts"
+      "src/**.ts",
+      "src/**/*.ts"
     ],
     "exclude": [
       "node_modules/"
+    ],
+    "reporter": [
+      "html"
     ],
     "exludeNodeModules": true
   }

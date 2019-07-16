@@ -13,14 +13,15 @@ jobs:
             apk add --no-cache ca-certificates
       - run:
           command: |
+            export DB_HOSTNAME=localhost
+            export DB_PORT=3306
+            export DB_USERNAME=root
+            export DB_PASSWORD=password
+            export DB_NAME=database
             npm ci
             npm run lint
             npm run build
-            npm test
-      - run:
-          name: "Run Mocha and Collect Coverage Reports"
-          command: npm run test:coverage
-
+            npm run test:coverage
       - store_artifacts:
           path: coverage
           destination: coverage

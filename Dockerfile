@@ -4,7 +4,7 @@ RUN apk add --no-cache ca-certificates
 ENV PORT 8080
 EXPOSE 8080
 
-WORKDIR app
+WORKDIR /app
 COPY . .
 RUN npm install
 
