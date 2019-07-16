@@ -36,16 +36,16 @@ export class Logging {
     }
 
     log(msg: string, additionalInfo: any[]) {
-        this.logger.log(this.level, msg, additionalInfo);
+      this.logger.log(this.level, msg, additionalInfo);
     }
 
     info(msg: string, ...additionalInfo: any[]) {
-        this.logger.log('info', msg, additionalInfo);
-        this.logger.info(msg, additionalInfo);
+      this.logger.log('info', msg, additionalInfo);
+      this.logger.info(msg, additionalInfo);
     }
 
     error(msg: string, additionalInfo: any[]) {
-        this.logger.log('error', msg, additionalInfo);
-        this.logger.error('error', msg, additionalInfo);
+      this.logger.log('error', msg, additionalInfo);
+      this.logger.error('error', msg, additionalInfo);
     }
 }
