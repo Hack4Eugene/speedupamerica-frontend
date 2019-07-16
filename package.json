@@ -42,7 +42,8 @@
   },
   "dependencies": {
     "mysql2": "^1.6.5",
-    "winston": "^3.2.1"
+    "winston": "^3.2.1",
+    "winston-raven-sentry": "^2.0.0"
   },
   "nyc": {
     "all": true,
