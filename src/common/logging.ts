@@ -1,5 +1,5 @@
 import {createLogger, format, transports} from 'winston';
-import {getEnv} from '../helper/config';
+import {getEnv} from './config';
 const Sentry = require('winston-raven-sentry');
 
 /**
@@ -24,7 +24,7 @@ const logging =
     ),
     transports: [
       new transports.Console({
-        level: 'error',
+        level: 'debug',
         format: format.simple(),
         stderrLevels: ['error'],
         consoleWarnLevels: ['warn', 'debug', 'info'],
