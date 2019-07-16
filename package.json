@@ -41,7 +41,9 @@
     "typescript": "^3.5.2"
   },
   "dependencies": {
-    "mysql2": "^1.6.5"
+    "mysql2": "^1.6.5",
+    "winston": "^3.2.1",
+    "winston-raven-sentry": "^2.0.0"
   },
   "nyc": {
     "all": true,
@@ -53,7 +55,8 @@
       "src/**/*.ts"
     ],
     "exclude": [
-      "node_modules/"
+      "node_modules/",
+      "src/common/*"
     ],
     "reporter": [
       "html"
