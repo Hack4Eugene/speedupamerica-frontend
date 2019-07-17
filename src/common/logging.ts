@@ -43,10 +43,13 @@ if (envVariables.logglyToken !== null &&
     subdomain: `https://logs-01.loggly.com/inputs/${envVariables.logglyToken}/tag/speedupamerica-v2`,
     json: true,
     format: format.combine(
+        format.printf(({level, timestamp, message}) => {
+          return `${level} ${timestamp} ${envVariables.env}: ${message}`;
+        }),
         format.timestamp(),
         format.json(),
         format.printf(() => {
-          return `ENV: ${envVariables.env}`;
+          return `environment: ${envVariables.env}`;
         }),
         format.printf(() => {
           return 'type: application';
