@@ -35,10 +35,9 @@ const logging =
     ],
   });
 
-if (envVariables.logglyToken !== null &&
-    envVariables.logglyToken !== undefined) {
+if (!envVariables.logglyToken) {
   winston.add(new Loggly({
-    level: 'error',
+    level: 'debug',
     token: envVariables.logglyToken,
     tags: ['NodeJS'],
     subdomain: `https://logs-01.loggly.com/inputs/${envVariables.logglyToken}/tag/speedupamerica-v2`,
