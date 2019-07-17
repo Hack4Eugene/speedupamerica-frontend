@@ -1,6 +1,7 @@
 import {createLogger, format, transports} from 'winston';
 const {Loggly} = require('winston-loggly-bulk');
 import {getEnvironmentVariables} from './config';
+import winston = require('winston');
 
 /**
  * Winston Log Object
@@ -30,24 +31,28 @@ const logging =
         stderrLevels: ['error'],
         consoleWarnLevels: ['warn', 'debug', 'info'],
       }),
-      new Loggly({
-        level: 'error',
-        token: envVariables.logglyToken,
-        tags: ["NodeJS"],
-        subdomain: `https://logs-01.loggly.com/inputs/${envVariables.logglyToken}/tag/speedupamerica-v2`,
-        json: true,
-        format: format.combine(
-          format.timestamp(),
-          format.json(),
-          format.printf(() => {
-            return `ENV: ${envVariables.env}`;
-          }),
-          format.printf(() => {
-            return 'type: application';
-          }),
-        ),
-      })
     ],
   });
+
+if (envVariables.logglyToken !== null &&
+    envVariables.logglyToken !== undefined) {
+  winston.add(new Loggly({
+    level: 'error',
+    token: envVariables.logglyToken,
+    tags: ['NodeJS'],
+    subdomain: `https://logs-01.loggly.com/inputs/${envVariables.logglyToken}/tag/speedupamerica-v2`,
+    json: true,
+    format: format.combine(
+        format.timestamp(),
+        format.json(),
+        format.printf(() => {
+          return `ENV: ${envVariables.env}`;
+        }),
+        format.printf(() => {
+          return 'type: application';
+        }),
+    ),
+  }));
+}
 
 export {logging};

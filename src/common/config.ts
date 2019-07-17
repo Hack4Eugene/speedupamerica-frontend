@@ -1,12 +1,12 @@
 
 function getEnvironmentVariables() {
-  let env = process.env['NODE_ENV'];
-  let logglyToken = process.env['LOGGLY_TOKEN'];
+  const env:string | undefined = process.env['NODE_ENV'];
+  const logglyToken: string | undefined = process.env['LOGGLY_TOKEN'];
 
   return {
     env,
-    logglyToken
-  }
+    logglyToken,
+  };
 }
 
 export {getEnvironmentVariables};
