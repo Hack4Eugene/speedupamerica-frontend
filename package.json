@@ -38,7 +38,8 @@
     "sinon": "^7.3.2",
     "source-map-support": "^0.5.12",
     "ts-node": "^8.3.0",
-    "typescript": "^3.5.2"
+    "typescript": "^3.5.2",
+    "winston-loggly-bulk": "^3.0.1"
   },
   "dependencies": {
     "mysql2": "^1.6.5",
