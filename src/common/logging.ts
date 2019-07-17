@@ -9,6 +9,7 @@ import winston = require('winston');
  * Send logs to Sentry if message level is at least 'info'.
  */
 const envVariables = getEnvironmentVariables();
+const NODE_ENV = envVariables.env;
 const logging =
   createLogger({
     level: envVariables.env === 'production' ? 'error' : 'debug',
@@ -18,7 +19,7 @@ const logging =
         format.timestamp(),
         format.json(),
         format.printf(() => {
-          return `ENV: ${envVariables.env}`;
+          return `ENV: ${NODE_ENV}`;
         }),
         format.printf(() => {
           return 'type: application';
@@ -44,7 +45,7 @@ if (envVariables.logglyToken !== null &&
     json: true,
     format: format.combine(
         format.printf(({level, timestamp, message}) => {
-          return `summary: ${level} ${timestamp} ${envVariables.env}: ${message}`;
+          return `summary: ${level} ${timestamp} ${NODE_ENV}: ${message}`;
         }),
         format.printf(({level}) => {
           return `severity: ${level}`;
@@ -52,7 +53,7 @@ if (envVariables.logglyToken !== null &&
         format.timestamp(),
         format.json(),
         format.printf(() => {
-          return `env: ${envVariables.env}`;
+          return `env: ${NODE_ENV}`;
         }),
         format.printf(() => {
           return 'type: application/json';
