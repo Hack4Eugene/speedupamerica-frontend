@@ -44,15 +44,18 @@ if (envVariables.logglyToken !== null &&
     json: true,
     format: format.combine(
         format.printf(({level, timestamp, message}) => {
-          return `${level} ${timestamp} ${envVariables.env}: ${message}`;
+          return `summary: ${level} ${timestamp} ${envVariables.env}: ${message}`;
+        }),
+        format.printf(({level}) => {
+          return `severity: ${level}`;
         }),
         format.timestamp(),
         format.json(),
         format.printf(() => {
-          return `environment: ${envVariables.env}`;
+          return `env: ${envVariables.env}`;
         }),
         format.printf(() => {
-          return 'type: application';
+          return 'type: application/json';
         }),
     ),
   }));
