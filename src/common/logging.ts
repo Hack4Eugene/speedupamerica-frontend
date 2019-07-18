@@ -7,7 +7,7 @@ const {
   NODE_ENV,
   LOGGLY_TOKEN,
   DB_HOSTNAME,
-  NPM_PACKAGE_VERSION
+  NPM_PACKAGE_VERSION,
 } = environmentVariables();
 
 // Winston Logger
@@ -37,10 +37,10 @@ const logging =
       new transports.Console({
         level: 'debug',
         format: format.combine(
-          format.colorize(),
-          format.printf(({level, timestamp, message}) => {
-            return `summary: ${level} ${timestamp} ${NODE_ENV}: ${message}`;
-          }),
+            format.colorize(),
+            format.printf(({level, timestamp, message}) => {
+              return `summary: ${level} ${timestamp} ${NODE_ENV}: ${message}`;
+            }),
         ),
         stderrLevels: ['error', 'debug'],
         consoleWarnLevels: ['warn', 'debug'],

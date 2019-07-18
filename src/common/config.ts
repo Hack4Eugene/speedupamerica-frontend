@@ -9,7 +9,7 @@ function environmentVariables() {
     NODE_ENV,
     DB_HOSTNAME,
     LOGGLY_TOKEN,
-    NPM_PACKAGE_VERSION
+    NPM_PACKAGE_VERSION,
   };
 }
 
