@@ -1,6 +1,18 @@
 
-function getEnv() {
-  return process.env['NODE_ENV'];
+const os = require('os');
+
+function environmentVariables() {
+  const NODE_ENV: string = process.env['NODE_ENV'] || 'local';
+  const HOSTNAME: string = process.env['HOSTNAME'] || os.hostname();
+  const LOGGLY_TOKEN: string | undefined = process.env['LOGGLY_TOKEN'];
+  const NPM_PACKAGE_VERSION: string = process.env['npm_package_version'] || '';
+
+  return {
+    NODE_ENV,
+    HOSTNAME,
+    LOGGLY_TOKEN,
+    NPM_PACKAGE_VERSION,
+  };
 }
 
-export {getEnv};
+export {environmentVariables};
