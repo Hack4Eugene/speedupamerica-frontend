@@ -8,6 +8,7 @@
     "start-dev": "nodemon -e ts,js,json -L --ignore dist/ --exec 'npm run build && npm start'",
     "lint": "eslint *.json src/*.ts src/**/*.ts test/*.spec.ts test/**/*.spec.ts",
     "build": "tsc -p .",
+    "check-types": "tsc",
     "test": "mocha -r ts-node/register --require source-map-support/register --recursive test/*.spec.ts test/**/*.spec.ts",
     "test:coverage": "nyc --nyc-optional --reporter=lcov --reporter=text -- npm test",
     "test:clean": "rm -rf .nyc_output/"
