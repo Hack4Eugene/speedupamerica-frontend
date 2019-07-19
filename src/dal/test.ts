@@ -10,4 +10,4 @@ function testConnection(): void {
   }, 1000);
 }
 
-export {testConnection};
+export {testConnection}
