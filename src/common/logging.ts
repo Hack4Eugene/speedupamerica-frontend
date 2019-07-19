@@ -6,7 +6,7 @@ const {Loggly} = require('winston-loggly-bulk');
 const {
   NODE_ENV,
   LOGGLY_TOKEN,
-  DB_HOSTNAME,
+  HOSTNAME,
   NPM_PACKAGE_VERSION,
 } = environmentVariables();
 
@@ -72,7 +72,7 @@ if (!LOGGLY_TOKEN) {
           return `severity: ${level}`;
         }),
         format.printf(() => {
-          return `hostname: ${DB_HOSTNAME}`;
+          return `hostname: ${HOSTNAME}`;
         }),
         format.printf(() => {
           return `packageVersion: ${NPM_PACKAGE_VERSION}`;
