@@ -1,6 +1,6 @@
 import {app} from '../src/application';
 import {expect} from 'chai';
-//import * as sinon from 'sinon';
+// import * as sinon from 'sinon';
 import * as request from 'supertest';
 
 describe('Application', () => {
@@ -19,33 +19,33 @@ describe('Application', () => {
     });
   });
 
-  it("should allow GET /health", async () => {
+  it('should allow GET /health', async () => {
     const result = await request(server).get('/health');
     expect(result.status).to.equal(200);
-    expect(result.body.status).to.equal('ok')
-  })
+    expect(result.body.status).to.equal('ok');
+  });
 
-  it("should allow GET /", async () => {
+  it('should allow GET /', async () => {
     const result = await request(server).get('/');
     expect(result.status).to.equal(200);
-    expect(result.text).to.equal('home')
-  })
+    expect(result.text).to.equal('home');
+  });
 
-  it("should should 404 on GET /test/doesnotexist", async () => {
+  it('should should 404 on GET /test/doesnotexist', async () => {
     const result = await request(server).get('/test/doesnotexist');
     expect(result.status).to.equal(404);
     expect(result.body.status).to.equal('error');
     expect(result.body.error).to.equal('not found');
   });
 
-  it("should should 500 on GET /test/error", async () => {
+  it('should should 500 on GET /test/error', async () => {
     const result = await request(server).get('/test/error');
     expect(result.status).to.equal(500);
     expect(result.body.status).to.equal('error');
     expect(result.body.error).to.equal('something went wrong');
   });
 
-  it("should should 500 on GET /test/exception", async () => {
+  it('should should 500 on GET /test/exception', async () => {
     const result = await request(server).get('/test/exception');
     expect(result.status).to.equal(500);
     expect(result.body.status).to.equal('error');
