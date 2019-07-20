@@ -9,7 +9,7 @@
     "lint": "eslint *.json src/*.ts src/**/*.ts test/*.spec.ts test/**/*.spec.ts",
     "build": "tsc -p .",
     "test": "mocha -r ts-node/register --require source-map-support/register --recursive test/*.spec.ts test/**/*.spec.ts",
-    "test:coverage": "nyc --all --nyc-optional --reporter=lcov --reporter=text -- npm test",
+    "test:coverage": "nyc --reporter=lcov --reporter=text -- npm test",
     "test:clean": "rm -rf .nyc_output/"
   },
   "repository": {
@@ -53,7 +53,7 @@
       ".ts"
     ],
     "include": [
-      "src/**.ts",
+      "src/*.ts",
       "src/**/*.ts"
     ],
     "exclude": [
