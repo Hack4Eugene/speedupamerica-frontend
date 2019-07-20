@@ -43,6 +43,6 @@ if (LOGGLY_TOKEN) {
 // prevents overriding default metadata in a child. Create base logger
 // w/o type and instead expose child with type. This allows additional
 // children (access log) to have a different type.
-const logging = base.child({type: 'app'})
+const logging = base.child({type: 'app'});
 
 export {logging, base};
