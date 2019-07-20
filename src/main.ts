@@ -1,11 +1,11 @@
-import {testConnection} from './dal/test';
 import {logging} from './common/logging';
+import {environmentVariables} from './common/config';
+import {app} from './app';
 
-// Temp, just here to demonstrate connection
-// Delete when we setup Express or whatever router we use
-testConnection();
+const config = environmentVariables();
 
-// Delete when we use Logging for requests.
-// (message.level, message, additionalInfo)
-logging.log('error', 'Starting main.ts', []);
-logging.log('error', 'Stopping main.ts', []);
+logging.info('Starting server');
+
+app.listen(config.PORT, () => {
+  logging.info(`Server started on ${config.PORT}`);
+});
