@@ -7,7 +7,6 @@ import * as homeController from './controller/home';
 import * as testController from './controller/test';
 import {logging} from './common/logging';
 
-
 export const app = express();
 
 // We want remote IP from LB's X-Forward-For header

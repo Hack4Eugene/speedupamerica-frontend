@@ -1,6 +1,6 @@
 import {logging} from './common/logging';
 import {environmentVariables} from './common/config';
-import {app} from './app';
+import {app} from './application';
 
 const config = environmentVariables();
 
