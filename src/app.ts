@@ -1,31 +1,52 @@
 import express = require('express');
-import {Response, Request, NextFunction} from 'express'
-import {accessLogMiddleware} from './common/access_log'
+import {Response, Request, NextFunction} from 'express';
+import {accessLogMiddleware} from './common/access_log';
 
 import * as healthController from './controller/health';
 import * as homeController from './controller/home';
 import * as testController from './controller/test';
-import { logging } from './common/logging';
+import {logging} from './common/logging';
 
 
 export const app = express();
-app.enable('trust proxy')
+
+// We want remote IP from LB's X-Forward-For header
+app.enable('trust proxy');
 
 // Setup access logs
 app.use(accessLogMiddleware());
 
-app.get('/', homeController.index);
+// Routes
 app.get('/health', healthController.health);
+app.get('/', homeController.index);
 
 // Test routes
 app.get('/test/error', testController.error);
 app.get('/test/exception', testController.exception);
 
-app.use((_req:Request, res:Response, _next:NextFunction) => {
-  res.status(404).send("Sorry can't find that!")
-})
+// 404 handler
+app.use((req:Request, res:Response, _next:NextFunction) => {
+  // @TODO create a nice 404 page and handle accepts header
+  res = res.status(404);
 
-app.use((err:Error, _req:Request, res:Response, _next:NextFunction) => {
-  logging.error("request failed", {error: err.message, stack: err.stack})
-  res.status(500).send(err.message)
-})
+  // Handle json
+  if (req.accepts('json')) {
+    res.json({'status': 'error', 'error': 'not found'});
+    return;
+  }
+
+  res.send('Not found');
+});
+
+// Error handler
+app.use((err:Error, req:Request, res:Response, _next:NextFunction) => {
+  logging.error('request failed', {error: err.message, stack: err.stack});
+
+  // Handle json
+  if (req.accepts('json')) {
+    res.json({'status': 'error', 'error': err.message});
+    return;
+  }
+
+  res.status(500).send(err.message);
+});
