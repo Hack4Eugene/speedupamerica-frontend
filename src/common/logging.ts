@@ -12,34 +12,37 @@ const metadata = {
   service: 'speedupamerica-frontend',
   env: NODE_ENV,
   hostname: HOSTNAME,
-  type: 'app',
 };
 
 // Winston Logger
 // Send message to STDOUT (console) if in development env.
-const logging =
-  createLogger({
-    level: level,
-    defaultMeta: metadata,
-    exitOnError: false,
-    format: format.combine(
-        format.timestamp(),
-        format.json(),
-    ),
-    transports: [
-      new transports.Console(),
-    ],
-  });
+const base = createLogger({
+  level: level,
+  defaultMeta: metadata,
+  exitOnError: false,
+  format: format.combine(
+      format.timestamp(),
+      format.json(),
+  ),
+  transports: [
+    new transports.Console(),
+  ],
+});
 
 // Configure Loggly if valid LOGGLY_TOKEN
 if (LOGGLY_TOKEN) {
-  logging.add(new Loggly({
+  base.add(new Loggly({
     token: LOGGLY_TOKEN,
-    tags: ['NodeJS'],
-    subdomain: `https://logs-01.loggly.com/inputs/${LOGGLY_TOKEN}/tag/speedupamerica-v2`,
+    subdomain: `speedupamerica`,
     json: true,
     timestamp: true,
   }));
 }
 
-export {logging};
+// Bug (https://github.com/winstonjs/winston/issues/1596) in Winston
+// prevents overriding default metadata in a child. Create base logger
+// w/o type and instead expose child with type. This allows additional
+// children (access log) to have a different type.
+const logging = base.child({type: 'app'})
+
+export {logging, base};

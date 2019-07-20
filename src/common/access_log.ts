@@ -1,8 +1,8 @@
 import {Response, Request, NextFunction} from 'express';
-import {logging} from './logging';
+import {base} from './logging';
 
 export const accessLogMiddleware = () => {
-  const logger = logging.child({type: 'http'});
+  const logger = base.child({type: 'http'});
 
   return (req:Request, res:Response, next:NextFunction) => {
     const startTime = new Date();
