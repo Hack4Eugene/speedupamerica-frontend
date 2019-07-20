@@ -41,11 +41,13 @@ app.use((req:Request, res:Response, _next:NextFunction) => {
 app.use((err:Error, req:Request, res:Response, _next:NextFunction) => {
   logging.error('request failed', {error: err.message, stack: err.stack});
 
+  res = res.status(500)
+
   // Handle json
   if (req.accepts('json')) {
     res.json({'status': 'error', 'error': err.message});
     return;
   }
 
-  res.status(500).send(err.message);
+  res.send(err.message);
 });
