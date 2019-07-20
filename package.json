@@ -44,7 +44,6 @@
   },
   "dependencies": {
     "express": "^4.17.1",
-    "express-winston": "^3.2.1",
     "mysql2": "^1.6.5",
     "winston": "^3.2.1"
   },
