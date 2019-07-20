@@ -57,8 +57,7 @@
       "src/**/*.ts"
     ],
     "exclude": [
-      "node_modules/",
-      "src/common/*"
+      "node_modules/"
     ],
     "reporter": [
       "html"
