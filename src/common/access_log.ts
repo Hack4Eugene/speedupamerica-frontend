@@ -3,9 +3,9 @@ import * as HttpStatus from 'http-status-codes';
 
 import {base} from './logging';
 
-export const accessLogMiddleware = () => {
-  const logger = base.child({type: 'http'});
+export const logger = base.child({type: 'http'});
 
+export const accessLogMiddleware = () => {
   return (req:Request, res:Response, next:NextFunction) => {
     const startTime = new Date();
 
