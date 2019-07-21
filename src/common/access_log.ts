@@ -1,4 +1,6 @@
 import {Response, Request, NextFunction} from 'express';
+import * as HttpStatus from 'http-status-codes';
+
 import {base} from './logging';
 
 export const accessLogMiddleware = () => {
@@ -16,7 +18,7 @@ export const accessLogMiddleware = () => {
         res: getResponseDetails(res),
       };
 
-      if (statusCode >= 500) {
+      if (statusCode >= HttpStatus.INTERNAL_SERVER_ERROR) {
         logger.error('request error', details);
         return;
       }
