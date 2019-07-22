@@ -3,7 +3,7 @@ import * as HttpStatus from 'http-status-codes';
 
 import {base} from './logging';
 
-export const logger = base.child({type: 'http'});
+export const log = base.child({type: 'http'});
 
 export const accessLogMiddleware = () => {
   return (req:Request, res:Response, next:NextFunction) => {
@@ -19,11 +19,11 @@ export const accessLogMiddleware = () => {
       };
 
       if (statusCode >= HttpStatus.INTERNAL_SERVER_ERROR) {
-        logger.error('request error', details);
+        log.error('request error', details);
         return;
       }
 
-      logger.info('request complete', details);
+      log.info('request complete', details);
     });
 
     next();

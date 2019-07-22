@@ -3,7 +3,7 @@
 // import * as HttpStatus from 'http-status-codes';
 
 describe('Health Controller', () => {
-  describe('index', () => {
+  describe('health', () => {
     it('should return OK w/ status=ok', () => {
 
     });

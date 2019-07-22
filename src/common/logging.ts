@@ -1,5 +1,6 @@
 import {createLogger, format, transports} from 'winston';
 import {environmentVariables} from './config';
+
 const {Loggly} = require('winston-loggly-bulk');
 
 const {
@@ -33,7 +34,7 @@ const base = createLogger({
 if (LOGGLY_TOKEN) {
   base.add(new Loggly({
     token: LOGGLY_TOKEN,
-    subdomain: `speedupamerica`,
+    subdomain: `speedupamerica`, // @TODO get from env vars
     json: true,
     timestamp: true,
   }));
