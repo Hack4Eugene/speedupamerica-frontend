@@ -49,7 +49,7 @@ const logging =
   });
 
 // Configure Loggly if valid LOGGLY_TOKEN
-if (!LOGGLY_TOKEN) {
+if (LOGGLY_TOKEN) {
   winston.add(new Loggly({
     level: 'debug',
     token: LOGGLY_TOKEN,
