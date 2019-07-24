@@ -4,7 +4,7 @@
   "description": "V2 Frontend for SpeedUpAmerica",
   "main": "dist/main.js",
   "scripts": {
-    "start": "node ./dist/main.js",
+    "start": "node ./dist/src/main.js",
     "start-dev": "nodemon -e ts,js,json -L --ignore dist/ --exec 'npm run build && npm start'",
     "lint": "eslint *.json src/*.ts src/**/*.ts test/*.spec.ts test/**/*.spec.ts",
     "build": "tsc -p .",

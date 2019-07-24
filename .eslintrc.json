@@ -14,7 +14,8 @@
     "sourceType": "module"
   },
   "rules": {
-    "require-jsdoc" : 0
+    "require-jsdoc" : 0,
+    "camelcase": 0
   },
   "plugins": [
     "json"

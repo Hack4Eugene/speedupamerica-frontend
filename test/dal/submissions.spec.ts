@@ -1,7 +1,25 @@
 import {pool} from '../../src/dal/connection';
-import {getCount} from '../../src/dal/submissions';
+import {getCount, create} from '../../src/dal/submissions';
 import {expect} from 'chai';
 import * as sinon from 'sinon';
+
+const createSuccessObj = {
+  latitude: 44.065,
+  longitude: -123.0941,
+  accuracy: 50,
+  address: 'Eugene',
+  actual_down_speed: 20.5,
+  actual_upload_speed: 2.5,
+  testing_for: '',
+  zip_code: '97401',
+  provider: 'Comcast',
+  connected_with: '',
+  monthly_price: '60',
+  provider_down_speed: 25.0,
+  rating: 6,
+  ping: 200,
+  hostname: '',
+};
 
 describe('Submissions DAL', () => {
   const fakeError = new Error('something went wrong');
@@ -36,6 +54,18 @@ describe('Submissions DAL', () => {
       } catch (err) {
         expect(err).to.not.be.null;
         expect(err.message).to.equal(fakeError.message);
+      }
+    });
+
+    it('should create submission successfully', async () => {
+      sandbox.stub(pool, 'query').callsFake(async () => {
+        return Promise.resolve([[createSuccessObj]]);
+      });
+      try {
+        const response = await create(createSuccessObj);
+        console.log(response);
+      } catch (err) {
+        console.log('Should not err...');
       }
     });
   });
