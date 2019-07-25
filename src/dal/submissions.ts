@@ -26,7 +26,7 @@ async function create(submission: Submission): Promise<number> {
     ping,
     hostname,
   } = submission;
-  
+
   // Invalid latitude, longitude coordinates
   if ((latitude <= -90 && latitude >= 90) ||
       (longitude <= -180 && longitude >= 180)) {

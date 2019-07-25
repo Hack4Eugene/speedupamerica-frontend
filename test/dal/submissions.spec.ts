@@ -65,8 +65,10 @@ describe('Submissions DAL', () => {
       expect(response).to.equal(createSuccessObj);
     });
 
-    it ('should handle missing param', async () => {
-      const invalidCoordinates = Object.assign(createSuccessObj, {latitude: -123.0941, longitude: 44.065});
+    it('should handle missing param', async () => {
+      const invalidCoordinates = Object.assign(
+          createSuccessObj,
+          {latitude: -123.0941, longitude: 44.065});
       try {
         await create(invalidCoordinates);
       } catch (err) {
