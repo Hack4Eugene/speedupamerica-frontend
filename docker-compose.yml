@@ -1,5 +1,25 @@
 version: '3.2'
 services:
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: suyc
+      MYSQL_USER: suyc
+      MYSQL_PASSWORD: suyc
+      MYSQL_DATABASE: suyc
+    ports:
+      - "3306:3306"
+  migrator:
+    build: ../speedupamerica-migrator
+    env_file:
+      - local.env
+    command: ["rake", "db:migrate"]
+    links:
+      - mysql
+    depends_on:
+      - mysql
+    volumes:
+      - ../speedupamerica-migrator:/migrator
   frontend-v2:
     build: .
     env_file:

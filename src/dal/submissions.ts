@@ -9,28 +9,20 @@ async function getCount(): Promise<number> {
   return rows[0].count;
 }
 
+
 async function create(submission: Submission): Promise<Submission> {
   const {
-    latitude,
-    longitude,
-    accuracy,
-    actual_down_speed,
-    actual_upload_speed,
-    testing_for, address,
-    zip_code,
-    provider,
-    connected_with,
-    monthly_price,
-    provider_down_speed,
-    rating,
-    ping,
-    hostname,
+    latitude, longitude, accuracy, actual_down_speed,
+    actual_upload_speed, testing_for, address, zip_code,
+    provider, connected_with, monthly_price,
+    provider_down_speed, rating,ping, hostname,
   } = submission;
 
   // Invalid latitude, longitude coordinates
   if ((latitude < -90 || latitude > 90) ||
       (longitude < -180 || longitude > 180)) {
-    return Promise.reject(invalidArgs);
+    logging.error('[Error] Submission Create (latitude, longitude).');
+    throw invalidArgs;
   }
 
   const query: string = 'INSERT INTO submission ' +
@@ -39,6 +31,7 @@ async function create(submission: Submission): Promise<Submission> {
     'provider, connected_with, monthly_price,' +
     'provider_down_speed, rating, ping, hostname)' +
     'VALUES (?)';
+
   const response = await pool.query(
       query,
       [latitude, longitude, accuracy, actual_down_speed,
