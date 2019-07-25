@@ -1,5 +1,5 @@
 import {pool} from '../../src/dal/connection';
-import {getCount, create} from '../../src/dal/submissions';
+import {getCount, create, invalidArgs} from '../../src/dal/submissions';
 import {expect} from 'chai';
 import * as sinon from 'sinon';
 
@@ -59,13 +59,19 @@ describe('Submissions DAL', () => {
 
     it('should create submission successfully', async () => {
       sandbox.stub(pool, 'query').callsFake(async () => {
-        return Promise.resolve([[createSuccessObj]]);
+        return Promise.resolve([createSuccessObj]);
       });
+      const response = await create(createSuccessObj);
+      expect(response).to.equal(createSuccessObj);
+    });
+
+    it ('should handle missing param', async () => {
+      const invalidCoordinates = Object.assign(createSuccessObj, {latitude: -123.0941, longitude: 44.065});
       try {
-        const response = await create(createSuccessObj);
-        console.log(response);
+        await create(invalidCoordinates);
       } catch (err) {
-        console.log('Should not err...');
+        console.log(err);
+        expect(err.message).to.equal(invalidArgs.message);
       }
     });
   });

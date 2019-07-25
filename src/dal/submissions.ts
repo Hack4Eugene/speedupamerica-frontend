@@ -1,6 +1,8 @@
 import {pool} from './connection';
 import {logging} from '../common/logging';
 
+const invalidArgs = new Error('invalid parameters');
+
 async function getCount(): Promise<number> {
   const query = 'SELECT count(*) as count FROM submissions';
   const [rows] = await pool.query(query);
@@ -24,6 +26,12 @@ async function create(submission: Submission): Promise<number> {
     ping,
     hostname,
   } = submission;
+  
+  // Invalid latitude, longitude coordinates
+  if ((latitude <= -90 && latitude >= 90) ||
+      (longitude <= -180 && longitude >= 180)) {
+    throw invalidArgs;
+  }
 
   const query: string = 'INSERT INTO submission ' +
     '(latitude, longitude, accuracy, actual_down_speed,' +
@@ -37,11 +45,11 @@ async function create(submission: Submission): Promise<number> {
         actual_upload_speed, testing_for, address, zip_code,
         provider, connected_with, monthly_price,
         provider_down_speed, rating, ping, hostname],
-      (err) => {
+      (err, res) => {
         if (err) {
-          logging.error('submission create error...', err);
+          logging.error('Submission create error...', err);
         } else {
-          logging.log('info', 'Submission created!');
+          logging.log('info', 'Submission created!', res);
         }
       }
   );
@@ -68,4 +76,4 @@ interface Submission {
 };
 
 
-export {getCount, create, Submission};
+export {getCount, create, invalidArgs};
