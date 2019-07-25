@@ -74,9 +74,8 @@ describe('Submissions DAL', () => {
       });
 
       const invalidCoordinates = cloneDeep(createSuccessObj);
-      Object.assign(
-          invalidCoordinates,
-          {latitude: -123.0941, longitude: 44.065});
+      invalidCoordinates.latitude = -123.0941;
+      invalidCoordinates.longitude = 44.065;
 
       try {
         await create(invalidCoordinates);
@@ -90,11 +89,9 @@ describe('Submissions DAL', () => {
         return Promise.reject(errInvalidArgs);
       });
       const invalidNumberValues = cloneDeep(createSuccessObj);
-      Object.assign(
-          invalidNumberValues,
-          {accuracy: -100,
-            actual_down_speed: -100000,
-            actual_upload_speed: -0.4});
+      invalidNumberValues.accuracy = -100;
+      invalidNumberValues.actual_down_speed = -100000;
+      invalidNumberValues.actual_upload_speed = -0.4;
 
       try {
         await create(invalidNumberValues);
@@ -108,11 +105,9 @@ describe('Submissions DAL', () => {
         return Promise.reject(errInvalidArgs);
       });
       const undefinedStringValues = cloneDeep(createSuccessObj);
-      Object.assign(
-          undefinedStringValues,
-          {testing_for: undefined,
-            address: undefined,
-            provider: undefined});
+      undefinedStringValues.testing_for = undefined;
+      undefinedStringValues.address = undefined;
+      undefinedStringValues.provider = undefined;
 
       try {
         await create(undefinedStringValues);
