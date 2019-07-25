@@ -13,7 +13,7 @@ function verifySubmission(submission: Submission) {
   // No invalid coordinates
   if ((latitude < -90 || latitude > 90) ||
     (longitude < -180 || longitude > 180)) {
-    logging.error('Submission Create (latitude, longitude).');
+    logging.error('Submission Create (latitude, longitude).', latitude, longitude);
     throw errInvalidArgs;
   }
 
