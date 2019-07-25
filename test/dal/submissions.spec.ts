@@ -72,8 +72,9 @@ describe('Submissions DAL', () => {
         return Promise.reject(errInvalidArgs);
       });
 
-      const invalidCoordinates = Object.assign(
-          createSuccessObj,
+      const invalidCoordinates = Object.assign({}, createSuccessObj);
+      Object.assign(
+          invalidCoordinates,
           {latitude: -123.0941, longitude: 44.065});
 
       try {
@@ -87,8 +88,9 @@ describe('Submissions DAL', () => {
       sandbox.stub(pool, 'query').callsFake(async () => {
         return Promise.reject(errInvalidArgs);
       });
-      const invalidNumberValues = Object.assign(
-          createSuccessObj,
+      const invalidNumberValues = Object.assign({}, createSuccessObj);
+      Object.assign(
+          invalidNumberValues,
           {accuracy: -100,
             actual_down_speed: -100000,
             actual_upload_speed: -0.4});
@@ -104,8 +106,9 @@ describe('Submissions DAL', () => {
       sandbox.stub(pool, 'query').callsFake(async () => {
         return Promise.reject(errInvalidArgs);
       });
-      const undefinedStringValues = Object.assign(
-          createSuccessObj,
+      const undefinedStringValues = Object.assign({}, createSuccessObj);
+      Object.assign(
+          undefinedStringValues,
           {testing_for: undefined,
             address: undefined,
             provider: undefined});
