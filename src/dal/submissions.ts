@@ -15,7 +15,7 @@ async function create(submission: Submission): Promise<Submission> {
     latitude, longitude, accuracy, actual_down_speed,
     actual_upload_speed, testing_for, address, zip_code,
     provider, connected_with, monthly_price,
-    provider_down_speed, rating,ping, hostname,
+    provider_down_speed, rating, ping, hostname,
   } = submission;
 
   // Invalid latitude, longitude coordinates
