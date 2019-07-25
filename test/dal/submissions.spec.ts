@@ -1,5 +1,7 @@
 import {pool} from '../../src/dal/connection';
-import {getCount, create, invalidArgs} from '../../src/dal/submissions';
+import {getCount, create} from '../../src/dal/submissions';
+import {errInvalidArgs} from '../../src/dal/errors';
+
 import {expect} from 'chai';
 import * as sinon from 'sinon';
 
@@ -65,20 +67,53 @@ describe('Submissions DAL', () => {
       expect(response).to.equal(createSuccessObj);
     });
 
-    it('should handle missing param', async () => {
+    it('should handle invalid latitude, longitude values', async () => {
       sandbox.stub(pool, 'query').callsFake(async () => {
-        return Promise.reject(invalidArgs);
+        return Promise.reject(errInvalidArgs);
       });
 
       const invalidCoordinates = Object.assign(
           createSuccessObj,
           {latitude: -123.0941, longitude: 44.065});
+
       try {
-        const response = await create(invalidCoordinates);
-        console.log('Response:', response);
-        expect(response).to.equal(invalidArgs);
+        await create(invalidCoordinates);
       } catch (err) {
-        expect(err).to.equal(invalidArgs);
+        expect(err).to.equal(errInvalidArgs);
+      }
+    });
+
+    it('should handle number values less than 0', async () => {
+      sandbox.stub(pool, 'query').callsFake(async () => {
+        return Promise.reject(errInvalidArgs);
+      });
+      const invalidNumberValues = Object.assign(
+          createSuccessObj,
+          {accuracy: -100,
+            actual_down_speed: -100000,
+            actual_upload_speed: -0.4});
+
+      try {
+        await create(invalidNumberValues);
+      } catch (err) {
+        expect(err).to.equal(errInvalidArgs);
+      }
+    });
+
+    it('should handle undefined string values', async () => {
+      sandbox.stub(pool, 'query').callsFake(async () => {
+        return Promise.reject(errInvalidArgs);
+      });
+      const undefinedStringValues = Object.assign(
+          createSuccessObj,
+          {testing_for: undefined,
+            address: undefined,
+            provider: undefined});
+
+      try {
+        await create(undefinedStringValues);
+      } catch (err) {
+        expect(err).to.equal(errInvalidArgs);
       }
     });
   });
