@@ -1,8 +1,8 @@
 import {pool} from '../../src/dal/connection';
 import {getCount, create} from '../../src/dal/submissions';
 import {errInvalidArgs} from '../../src/dal/errors';
-import {cloneDeep} from 'lodash';
 
+import {cloneDeep} from 'lodash';
 import {expect} from 'chai';
 import * as sinon from 'sinon';
 

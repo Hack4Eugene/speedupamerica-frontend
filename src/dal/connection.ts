@@ -1,6 +1,5 @@
+import {errMissingConnDetails} from './errors';
 const mysql = require('mysql2/promise');
-
-const errMissingConnDetails = new Error('database connection details missing');
 
 const opts = getConnectionDetails();
 const pool = mysql.createPool(opts);

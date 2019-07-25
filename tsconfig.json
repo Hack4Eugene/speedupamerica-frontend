@@ -9,8 +9,7 @@
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noImplicitAny": false,
-    "typeRoots": ["./src/dal/helper", "./node_modules/@types"]
+    "noImplicitAny": false
   },
   "include": [
     "src/**/*.ts",
