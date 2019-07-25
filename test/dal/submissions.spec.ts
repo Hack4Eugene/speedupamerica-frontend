@@ -70,7 +70,7 @@ describe('Submissions DAL', () => {
           createSuccessObj,
           {latitude: -123.0941, longitude: 44.065});
       try {
-        create(invalidCoordinates);
+        await create(invalidCoordinates);
       } catch (err) {
         console.log(err);
         expect(err.code).to.equal('ECONNREFUSED');

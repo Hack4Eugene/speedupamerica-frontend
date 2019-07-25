@@ -30,7 +30,7 @@ async function create(submission: Submission): Promise<number> {
   // Invalid latitude, longitude coordinates
   if ((latitude <= -90 && latitude >= 90) ||
       (longitude <= -180 && longitude >= 180)) {
-    throw invalidArgs;
+    return Promise.reject(invalidArgs);
   }
 
   const query: string = 'INSERT INTO submission ' +
