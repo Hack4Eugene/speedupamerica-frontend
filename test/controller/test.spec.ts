@@ -13,12 +13,13 @@ describe('Test Controller', () => {
       error(req, res);
 
       expect(res.status.callCount).to.equal(1);
-      expect(res.status.firstCall.args[0]).to.equal(HttpStatus.INTERNAL_SERVER_ERROR);
+      const statusArgs = res.status.firstCall.args;
+      expect(statusArgs[0]).to.equal(HttpStatus.INTERNAL_SERVER_ERROR);
 
       expect(res.json.callCount).to.equal(1);
-      const args = res.json.firstCall.args;
-      expect(args[0].status).to.equal('error');
-      expect(args[0].error).to.equal('something went wrong');
+      const jsonArgs = res.json.firstCall.args;
+      expect(jsonArgs[0].status).to.equal('error');
+      expect(jsonArgs[0].error).to.equal('something went wrong');
     });
   });
 
@@ -29,7 +30,7 @@ describe('Test Controller', () => {
 
       expect(() => {
         exception(req, res);
-      }).to.throw("something went wrong");
+      }).to.throw('something went wrong');
     });
   });
 });
