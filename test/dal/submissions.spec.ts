@@ -74,9 +74,14 @@ describe('Submissions DAL', () => {
           createSuccessObj,
           {latitude: -123.0941, longitude: 44.065});
       console.log(invalidCoordinates);
-      const response = await create(invalidCoordinates);
-      console.log(response);
-      expect(response).to.equal(invalidArgs);
+      try {
+        const response = await create(invalidCoordinates);
+        console.log(response);
+        expect(response).to.equal(invalidArgs);
+      } catch (err) {
+        console.log(err);
+        expect(err).to.equal(invalidArgs);
+      }
     });
   });
 });
