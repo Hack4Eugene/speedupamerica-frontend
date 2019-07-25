@@ -11,7 +11,7 @@ async function getCount(): Promise<number> {
 
 async function create(submission: Submission): Promise<Submission> {
   verifySubmission(submission);
-
+  
   const {
     latitude, longitude, accuracy, actual_down_speed,
     actual_upload_speed, testing_for, address, zip_code,
@@ -19,14 +19,14 @@ async function create(submission: Submission): Promise<Submission> {
     provider_down_speed, rating, ping, hostname,
   } = submission;
 
-  const query: string = 'INSERT INTO submission ' +
-    '(latitude, longitude, accuracy, actual_down_speed,' +
-    'actual_upload_speed, testing_for, address, zip_code,' +
-    'provider, connected_with, monthly_price,' +
-    'provider_down_speed, rating, ping, hostname)' +
-    'VALUES (?)';
+  const query: string = 'INSERT INTO submissions ' +
+    '(latitude, longitude, accuracy, actual_down_speed, ' +
+    'actual_upload_speed, testing_for, address, zip_code, ' +
+    'provider, connected_with, monthly_price, ' +
+    'provider_down_speed, rating, ping, hostname) ' +
+    'VALUES (?) ';
 
-  const response = await pool.query(
+  const response = await pool.execute(
       query,
       [latitude, longitude, accuracy, actual_down_speed,
         actual_upload_speed, testing_for, address, zip_code,
@@ -34,7 +34,7 @@ async function create(submission: Submission): Promise<Submission> {
         provider_down_speed, rating, ping, hostname],
       (err, res) => {
         if (err) {
-          logging.error('Submission create...', err);
+          logging.error('Submission Create (Connection)', err);
         } else {
           logging.log('info', 'Submission created!', res);
         }

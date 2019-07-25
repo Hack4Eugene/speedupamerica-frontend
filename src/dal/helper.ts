@@ -13,7 +13,7 @@ function verifySubmission(submission: Submission) {
   // No invalid coordinates
   if ((latitude < -90 || latitude > 90) ||
     (longitude < -180 || longitude > 180)) {
-    logging.error('Submission Create (latitude, longitude)');
+    logging.error('Submission Create (latitude, longitude).');
     throw errInvalidArgs;
   }
 
@@ -28,7 +28,7 @@ function verifySubmission(submission: Submission) {
     throw errInvalidArgs;
   }
 
-  // No undefined strings
+  // No empty/undefined strings
   if (!testing_for ||
     !address ||
     !zip_code ||

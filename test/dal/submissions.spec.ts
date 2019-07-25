@@ -115,5 +115,21 @@ describe('Submissions DAL', () => {
         expect(err).to.equal(errInvalidArgs);
       }
     });
+
+    it('should handle empty string values', async () => {
+      sandbox.stub(pool, 'query').callsFake(async () => {
+        return Promise.reject(errInvalidArgs);
+      });
+      const emptyStringValues = cloneDeep(createSuccessObj);
+      emptyStringValues.testing_for = '';
+      emptyStringValues.address = '';
+      emptyStringValues.provider = '';
+
+      try {
+        await create(emptyStringValues);
+      } catch (err) {
+        expect(err).to.equal(errInvalidArgs);
+      }
+    });
   });
 });
