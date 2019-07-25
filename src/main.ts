@@ -7,5 +7,5 @@ testConnection();
 
 // Delete when we use Logging for requests.
 // (message.level, message, additionalInfo)
-logging.log('info', 'Starting main.ts', []);
-logging.log('info', 'Stopping main.ts', []);
+logging.log('error', 'Starting main.ts', []);
+logging.log('error', 'Stopping main.ts', []);

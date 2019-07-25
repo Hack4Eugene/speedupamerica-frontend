@@ -4,10 +4,11 @@
   "description": "V2 Frontend for SpeedUpAmerica",
   "main": "dist/main.js",
   "scripts": {
-    "start": "node ./dist/main.js",
+    "start": "node ./dist/src/main.js",
     "start-dev": "nodemon -e ts,js,json -L --ignore dist/ --exec 'npm run build && npm start'",
     "lint": "eslint *.json src/*.ts src/**/*.ts test/*.spec.ts test/**/*.spec.ts",
     "build": "tsc -p .",
+    "check-types": "tsc",
     "test": "mocha -r ts-node/register --require source-map-support/register --recursive test/*.spec.ts test/**/*.spec.ts",
     "test:coverage": "nyc --nyc-optional --reporter=lcov --reporter=text -- npm test",
     "test:clean": "rm -rf .nyc_output/"
@@ -25,7 +26,7 @@
   "devDependencies": {
     "@types/chai": "^4.1.7",
     "@types/mocha": "^5.2.7",
-    "@types/node": "^12.6.2",
+    "@types/node": "^12.6.6",
     "@types/sinon": "^7.0.13",
     "@typescript-eslint/parser": "^1.11.0",
     "chai": "^4.2.0",
@@ -38,12 +39,13 @@
     "sinon": "^7.3.2",
     "source-map-support": "^0.5.12",
     "ts-node": "^8.3.0",
-    "typescript": "^3.5.2"
+    "typescript": "^3.5.2",
+    "winston-loggly-bulk": "^3.0.1"
   },
   "dependencies": {
+    "lodash": "^4.17.15",
     "mysql2": "^1.6.5",
-    "winston": "^3.2.1",
-    "winston-raven-sentry": "^2.0.0"
+    "winston": "^3.2.1"
   },
   "nyc": {
     "all": true,
