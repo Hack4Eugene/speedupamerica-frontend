@@ -1,17 +1,35 @@
-// import {expect} from 'chai';
-// import * as sinon from 'sinon';
-// import * as HttpStatus from 'http-status-codes';
+import {expect} from 'chai';
+import * as HttpStatus from 'http-status-codes';
 
-describe('Testing Controller', () => {
+import {stubRequest, stubResponse} from '../helpers';
+import {error, exception} from '../../src/controller/test';
+
+describe('Test Controller', () => {
   describe('error', () => {
     it('should return 500 w/ error', () => {
+      const req = stubRequest();
+      const res = stubResponse();
 
+      error(req, res);
+
+      expect(res.status.callCount).to.equal(1);
+      expect(res.status.firstCall.args[0]).to.equal(HttpStatus.INTERNAL_SERVER_ERROR);
+
+      expect(res.json.callCount).to.equal(1);
+      const args = res.json.firstCall.args;
+      expect(args[0].status).to.equal('error');
+      expect(args[0].error).to.equal('something went wrong');
     });
   });
 
-  describe('error', () => {
-    it('should throw an exception', () => {
+  describe('exception', () => {
+    it('should thow error', () => {
+      const req = stubRequest();
+      const res = stubResponse();
 
+      expect(() => {
+        exception(req, res);
+      }).to.throw("something went wrong");
     });
   });
 });
