@@ -26,6 +26,7 @@ function verifySubmission(submission: Submission) {
     provider_down_speed < 0 ||
     ping < 0 ||
     rating < 1) {
+    logging.error('Submission Create (no negative numbers).');
     throw errInvalidArgs;
   }
 
@@ -37,6 +38,7 @@ function verifySubmission(submission: Submission) {
     !connected_with ||
     !monthly_price ||
     !hostname) {
+    logging.error('Submission Create (string value is undefined).');
     throw errInvalidArgs;
   }
 }
