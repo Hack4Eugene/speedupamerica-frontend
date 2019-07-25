@@ -9,7 +9,7 @@ async function getCount(): Promise<number> {
   return rows[0].count;
 }
 
-async function create(submission: Submission): Promise<number> {
+async function create(submission: Submission): Promise<Submission> {
   const {
     latitude,
     longitude,
@@ -28,8 +28,8 @@ async function create(submission: Submission): Promise<number> {
   } = submission;
 
   // Invalid latitude, longitude coordinates
-  if ((latitude <= -90 && latitude >= 90) ||
-      (longitude <= -180 && longitude >= 180)) {
+  if ((latitude < -90 || latitude > 90) ||
+      (longitude < -180 || longitude > 180)) {
     return Promise.reject(invalidArgs);
   }
 
