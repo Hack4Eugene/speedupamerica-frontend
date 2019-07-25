@@ -1,5 +1,5 @@
 import {pool} from '../../src/dal/connection';
-import {getCount, create, invalidArgs} from '../../src/dal/submissions';
+import {getCount, create} from '../../src/dal/submissions';
 import {expect} from 'chai';
 import * as sinon from 'sinon';
 
