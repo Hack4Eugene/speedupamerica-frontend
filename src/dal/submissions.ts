@@ -11,7 +11,7 @@ async function getCount(): Promise<number> {
 
 async function create(submission: Submission): Promise<Submission> {
   verifySubmission(submission);
-  
+
   const {
     latitude, longitude, accuracy, actual_down_speed,
     actual_upload_speed, testing_for, address, zip_code,
@@ -26,7 +26,7 @@ async function create(submission: Submission): Promise<Submission> {
     'provider_down_speed, rating, ping, hostname) ' +
     'VALUES (?) ';
 
-  const response = await pool.execute(
+  const response = await pool.query(
       query,
       [latitude, longitude, accuracy, actual_down_speed,
         actual_upload_speed, testing_for, address, zip_code,
