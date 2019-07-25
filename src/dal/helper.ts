@@ -10,6 +10,8 @@ function verifySubmission(submission: Submission) {
     provider_down_speed, rating, ping, hostname,
   } = submission;
 
+  console.log('Latitude:', latitude);
+  console.log('Longitude:', longitude);
   // No invalid coordinates
   if ((latitude < -90 || latitude > 90) ||
     (longitude < -180 || longitude > 180)) {
