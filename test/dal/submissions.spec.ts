@@ -1,6 +1,7 @@
 import {pool} from '../../src/dal/connection';
 import {getCount, create} from '../../src/dal/submissions';
 import {errInvalidArgs} from '../../src/dal/errors';
+import {cloneDeep} from 'lodash';
 
 import {expect} from 'chai';
 import * as sinon from 'sinon';
@@ -72,7 +73,7 @@ describe('Submissions DAL', () => {
         return Promise.reject(errInvalidArgs);
       });
 
-      const invalidCoordinates = Object.assign({}, createSuccessObj);
+      const invalidCoordinates = cloneDeep(createSuccessObj);
       Object.assign(
           invalidCoordinates,
           {latitude: -123.0941, longitude: 44.065});
@@ -88,7 +89,7 @@ describe('Submissions DAL', () => {
       sandbox.stub(pool, 'query').callsFake(async () => {
         return Promise.reject(errInvalidArgs);
       });
-      const invalidNumberValues = Object.assign({}, createSuccessObj);
+      const invalidNumberValues = cloneDeep(createSuccessObj);
       Object.assign(
           invalidNumberValues,
           {accuracy: -100,
@@ -106,7 +107,7 @@ describe('Submissions DAL', () => {
       sandbox.stub(pool, 'query').callsFake(async () => {
         return Promise.reject(errInvalidArgs);
       });
-      const undefinedStringValues = Object.assign({}, createSuccessObj);
+      const undefinedStringValues = cloneDeep(createSuccessObj);
       Object.assign(
           undefinedStringValues,
           {testing_for: undefined,

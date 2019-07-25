@@ -43,6 +43,7 @@
     "winston-loggly-bulk": "^3.0.1"
   },
   "dependencies": {
+    "lodash": "^4.17.15",
     "mysql2": "^1.6.5",
     "winston": "^3.2.1"
   },
