@@ -64,6 +64,7 @@ describe('Submissions DAL', () => {
       sandbox.stub(pool, 'query').callsFake(async () => {
         return Promise.resolve([createSuccessObj]);
       });
+      console.log(createSuccessObj);
       const response = await create(createSuccessObj);
       expect(response).to.equal(createSuccessObj);
     });
