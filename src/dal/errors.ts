@@ -1,3 +1,3 @@
-const errInvalidArgs = new Error('Invalid parameters');
+const errInvalidArgs = new Error('Invalid arguments');
 
 export {errInvalidArgs};

@@ -68,53 +68,5 @@ describe('Submissions DAL', () => {
       const response = await create(createSuccessObj);
       expect(response).to.equal(createSuccessObj);
     });
-
-    it('should handle invalid latitude, longitude values', async () => {
-      sandbox.stub(pool, 'query').callsFake(async () => {
-        return Promise.reject(errInvalidArgs);
-      });
-
-      const invalidCoordinates = cloneDeep(createSuccessObj);
-      invalidCoordinates.latitude = -123.0941;
-      invalidCoordinates.longitude = 44.065;
-
-      try {
-        await create(invalidCoordinates);
-      } catch (err) {
-        expect(err).to.equal(errInvalidArgs);
-      }
-    });
-
-    it('should handle number values less than 0', async () => {
-      sandbox.stub(pool, 'query').callsFake(async () => {
-        return Promise.reject(errInvalidArgs);
-      });
-      const invalidNumberValues = cloneDeep(createSuccessObj);
-      invalidNumberValues.accuracy = -100;
-      invalidNumberValues.actual_down_speed = -100000;
-      invalidNumberValues.actual_upload_speed = -0.4;
-
-      try {
-        await create(invalidNumberValues);
-      } catch (err) {
-        expect(err).to.equal(errInvalidArgs);
-      }
-    });
-
-    it('should handle undefined string values', async () => {
-      sandbox.stub(pool, 'query').callsFake(async () => {
-        return Promise.reject(errInvalidArgs);
-      });
-      const undefinedStringValues = cloneDeep(createSuccessObj);
-      undefinedStringValues.testing_for = undefined;
-      undefinedStringValues.address = undefined;
-      undefinedStringValues.provider = undefined;
-
-      try {
-        await create(undefinedStringValues);
-      } catch (err) {
-        expect(err).to.equal(errInvalidArgs);
-      }
-    });
   });
 });
