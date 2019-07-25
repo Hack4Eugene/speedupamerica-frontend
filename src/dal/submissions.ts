@@ -1,7 +1,7 @@
 import {pool} from './connection';
 import {logging} from '../common/logging';
 
-const invalidArgs = new Error('invalid parameters');
+const invalidArgs = new Error('Invalid parameters');
 
 async function getCount(): Promise<number> {
   const query = 'SELECT count(*) as count FROM submissions';
@@ -21,7 +21,7 @@ async function create(submission: Submission): Promise<Submission> {
   // Invalid latitude, longitude coordinates
   if ((latitude < -90 || latitude > 90) ||
       (longitude < -180 || longitude > 180)) {
-    logging.error('[Error] Submission Create (latitude, longitude).');
+    logging.error('Submission Create (latitude, longitude).');
     throw invalidArgs;
   }
 
