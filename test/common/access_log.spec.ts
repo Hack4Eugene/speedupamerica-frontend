@@ -5,6 +5,7 @@ import * as sinon from 'sinon';
 import * as HttpStatus from 'http-status-codes';
 
 import {accessLogMiddleware, log} from '../../src/common/access_log';
+import {base} from '../../src/common/logging';
 
 describe('Access Log', () => {
   let sandbox: sinon.SinonSandbox;
@@ -19,7 +20,12 @@ describe('Access Log', () => {
 
   describe('accessLogMiddleware', () => {
     it('should have type=http on child log', () => {
+      const stub = sandbox.stub(base, 'write');
 
+      log.info("test")
+      expect(stub.callCount).to.equal(1);
+      const call = stub.getCall(0)
+      expect(call.args[0].type).to.equal('http');
     });
 
     it('should log response details', (done) => {
