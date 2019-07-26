@@ -1,6 +1,6 @@
 import {pool} from './connection';
 import {logging} from '../common/logging';
-import {Submission} from '../common/typings'; /* eslint no-unused-vars: 0 */
+import {Submission} from '../common/typings';
 import {verifySubmission} from './helper';
 
 async function getCount(): Promise<number> {
