@@ -31,7 +31,7 @@ describe('Application', () => {
     expect(result.text).to.equal('home');
   });
 
-  it('should should JSON 404 on GET /test/doesnotexist', async () => {
+  it('should JSON 404 on GET /test/doesnotexist', async () => {
     const result = await request(server)
         .get('/test/doesnotexist')
         .set('Accept', 'application/json');
@@ -40,7 +40,7 @@ describe('Application', () => {
     expect(result.body.error).to.equal('not found');
   });
 
-  it('should should 404 on GET /test/doesnotexist', async () => {
+  it('should 404 on GET /test/doesnotexist', async () => {
     const result = await request(server)
         .get('/test/doesnotexist')
         .set('Accept', 'text/html');
@@ -48,14 +48,14 @@ describe('Application', () => {
     expect(result.text).to.equal('Not found');
   });
 
-  it('should should 500 on GET /test/error', async () => {
+  it('should 500 on GET /test/error', async () => {
     const result = await request(server).get('/test/error');
     expect(result.status).to.equal(HttpStatus.INTERNAL_SERVER_ERROR);
     expect(result.body.status).to.equal('error');
     expect(result.body.error).to.equal('something went wrong');
   });
 
-  it('should should JSON 500 on JSON GET /test/exception', async () => {
+  it('should JSON 500 on JSON GET /test/exception', async () => {
     const result = await request(server)
         .get('/test/exception')
         .set('Accept', 'application/json');
@@ -64,7 +64,7 @@ describe('Application', () => {
     expect(result.body.error).to.equal('something went wrong');
   });
 
-  it('should should 500 on GET /test/exception', async () => {
+  it('should 500 on GET /test/exception', async () => {
     const result = await request(server)
         .get('/test/exception')
         .set('Accept', 'text/html');
