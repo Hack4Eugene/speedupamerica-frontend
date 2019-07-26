@@ -8,4 +8,4 @@ WORKDIR /app
 COPY . .
 RUN npm install
 
-CMD ["npm", "run", "start-dev"]
+CMD ["node", "../dist/main.js"]

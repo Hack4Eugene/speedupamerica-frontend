@@ -1,84 +1,49 @@
 import {createLogger, format, transports} from 'winston';
 import {environmentVariables} from './config';
-import winston = require('winston');
+
 const {Loggly} = require('winston-loggly-bulk');
 
 const {
   NODE_ENV,
   LOGGLY_TOKEN,
   HOSTNAME,
-  NPM_PACKAGE_VERSION,
 } = environmentVariables();
+const level = NODE_ENV === 'development' ? 'debug' : 'info';
+const metadata = {
+  service: 'speedupamerica-frontend',
+  env: NODE_ENV,
+  hostname: HOSTNAME,
+};
 
 // Winston Logger
 // Send message to STDOUT (console) if in development env.
-const logging =
-  createLogger({
-    level: NODE_ENV === 'development' ? 'debug' : 'info',
-    defaultMeta: {service: 'speedupamerica-frontend'},
-    exitOnError: false,
-    format: format.combine(
-        format.printf(({level, timestamp, message}) => {
-          return `summary: ${level} ${timestamp} ${NODE_ENV}: ${message}`;
-        }),
-        format.timestamp(),
-        format.json(),
-        format.printf(() => {
-          return `env: ${NODE_ENV}`;
-        }),
-        format.printf(() => {
-          return 'type: application/json';
-        }),
-        format.printf(({level}) => {
-          return `severity: ${level}`;
-        }),
-    ),
-    transports: [
-      new transports.Console({
-        level: 'debug',
-        format: format.combine(
-            format.colorize(),
-            format.printf(({level, timestamp, message}) => {
-              return `summary: ${level} ${timestamp} ${NODE_ENV}: ${message}`;
-            }),
-        ),
-        stderrLevels: ['error', 'debug'],
-        consoleWarnLevels: ['warn', 'debug'],
-      }),
-    ],
-  });
+const base = createLogger({
+  level: level,
+  defaultMeta: metadata,
+  exitOnError: false,
+  format: format.combine(
+      format.timestamp(),
+      format.json(),
+  ),
+  transports: [
+    new transports.Console(),
+  ],
+});
 
 // Configure Loggly if valid LOGGLY_TOKEN
-if (!LOGGLY_TOKEN) {
-  winston.add(new Loggly({
-    level: 'debug',
+if (LOGGLY_TOKEN) {
+  base.add(new Loggly({
     token: LOGGLY_TOKEN,
-    tags: ['NodeJS'],
-    subdomain: `https://logs-01.loggly.com/inputs/${LOGGLY_TOKEN}/tag/speedupamerica-v2`,
+    subdomain: `speedupamerica`, // @TODO get from env vars
     json: true,
-    format: format.combine(
-        format.printf(({level, timestamp, message}) => {
-          return `summary: ${level} ${timestamp} ${NODE_ENV}: ${message}`;
-        }),
-        format.timestamp(),
-        format.json(),
-        format.printf(() => {
-          return `env: ${NODE_ENV}`;
-        }),
-        format.printf(() => {
-          return 'type: application/json';
-        }),
-        format.printf(({level}) => {
-          return `severity: ${level}`;
-        }),
-        format.printf(() => {
-          return `hostname: ${HOSTNAME}`;
-        }),
-        format.printf(() => {
-          return `packageVersion: ${NPM_PACKAGE_VERSION}`;
-        })
-    ),
+    timestamp: true,
   }));
 }
 
-export {logging};
+// Bug (https://github.com/winstonjs/winston/issues/1596) in Winston
+// prevents overriding default metadata in a child. Create base logger
+// w/o type and instead expose child with type. This allows additional
+// children (access log) to have a different type.
+const logging = base.child({type: 'app'});
+
+export {logging, base};
