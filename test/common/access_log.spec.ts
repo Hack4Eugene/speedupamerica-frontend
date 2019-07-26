@@ -22,9 +22,10 @@ describe('Access Log', () => {
     it('should have type=http on child log', () => {
       const stub = sandbox.stub(base, 'write');
 
-      log.info("test")
+      log.info('test');
+
       expect(stub.callCount).to.equal(1);
-      const call = stub.getCall(0)
+      const call = stub.getCall(0);
       expect(call.args[0].type).to.equal('http');
     });
 
