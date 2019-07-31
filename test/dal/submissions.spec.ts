@@ -118,7 +118,7 @@ describe('Submissions DAL', () => {
       sandbox.stub(pool, 'query').callsFake(async () => {
         return errConnectionRefused;
       });
-      create(createSuccessObj).catch(err => {
+      create(createSuccessObj).catch((err) => {
         expect(err).to.equal(errConnectionRefused);
         expect(err.code).to.equal('ECONNREFUSED');
       });
