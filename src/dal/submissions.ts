@@ -32,9 +32,7 @@ async function create(submission: Submission): Promise<Submission> {
         provider, connected_with, monthly_price,
         provider_down_speed, rating, ping, hostname],
       (err) => {
-        if (err) {
-          logging.error('Submission Create (Connection)', err);
-        }
+        if (err) logging.error('Submission Create (Connection)', err);
       }
   );
 
