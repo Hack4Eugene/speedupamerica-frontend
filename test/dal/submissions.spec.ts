@@ -1,7 +1,9 @@
 import {pool} from '../../src/dal/connection';
 import {getCount, create} from '../../src/dal/submissions';
 import {expect} from 'chai';
+import {cloneDeep} from 'lodash';
 import * as sinon from 'sinon';
+import {errInvalidArgs, errConnectionRefused} from '../../src/common/errors';
 
 const createSuccessObj = {
   latitude: 44.065,
@@ -91,5 +93,36 @@ describe('Submissions DAL', () => {
       expect(response.ping).to.equal(200);
       expect(response.hostname).to.equal('localhost');
     });
+
+    it('should handle invalid parameters', async () => {
+      const invalidSubmission = cloneDeep(createSuccessObj);
+      invalidSubmission.latitude = -123.0941;
+      invalidSubmission.longitude = 44.065;
+      invalidSubmission.accuracy = -1;
+      invalidSubmission.actual_upload_speed = -1;
+      invalidSubmission.ping = -1;
+      invalidSubmission.rating = 0;
+      invalidSubmission.testing_for = 'a'.repeat(256);
+      invalidSubmission.address = 'a'.repeat(256);
+      invalidSubmission.provider = 'a'.repeat(256);
+      invalidSubmission.connected_with = 'a'.repeat(256);
+      invalidSubmission.monthly_price = 'a'.repeat(256);
+      invalidSubmission.hostname = 'a-z!?';
+
+      expect(() => {
+        create(invalidSubmission);
+      }).to.throw(errInvalidArgs);
+    });
+
+    it('should handle query connection error', async () => {
+      sandbox.stub(pool, 'query').callsFake(async () => {
+        return errConnectionRefused;
+      });
+      create(createSuccessObj).catch(err => {
+        expect(err).to.equal(errConnectionRefused);
+        expect(err.code).to.equal('ECONNREFUSED');
+      });
+    });
   });
 });
+

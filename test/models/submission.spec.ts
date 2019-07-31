@@ -113,15 +113,15 @@ describe('Model Submission', () => {
 
     it('should handle invalid large actual_down_speed', () => {
       const invalidSubmission = cloneDeep(submission);
-      invalidSubmission.actual_down_speed = -1;
+      invalidSubmission.actual_down_speed = 1.8446744e+19 + 1;
       expect(() => {
         verifySubmission(invalidSubmission);
       }).to.throw(errInvalidArgs);
     });
 
-    it('should handle invalid negative actual_down_speed', () => {
+    it('should handle invalid negative actual_upload_speed', () => {
       const invalidSubmission = cloneDeep(submission);
-      invalidSubmission.actual_down_speed = 1.8446744e+19 + 1;
+      invalidSubmission.actual_upload_speed = -1;
       expect(() => {
         verifySubmission(invalidSubmission);
       }).to.throw(errInvalidArgs);
@@ -129,7 +129,7 @@ describe('Model Submission', () => {
 
     it('should handle invalid large actual_upload_speed', () => {
       const invalidSubmission = cloneDeep(submission);
-      invalidSubmission.actual_down_speed = 1.8446744e+19 + 1;
+      invalidSubmission.actual_upload_speed = 1.8446744e+19 + 1;
       expect(() => {
         verifySubmission(invalidSubmission);
       }).to.throw(errInvalidArgs);
@@ -159,7 +159,7 @@ describe('Model Submission', () => {
       }).to.throw(errInvalidArgs);
     });
 
-    it('should handle invalid zero rating', () => {
+    it('should handle invalid large rating', () => {
       const invalidSubmission = cloneDeep(submission);
       invalidSubmission.rating = 1.8446744e+19 + 1;
       expect(() => {
