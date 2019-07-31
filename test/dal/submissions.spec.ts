@@ -72,7 +72,7 @@ describe('Submissions DAL', () => {
 
     it('should create submission successfully', async () => {
       sandbox.stub(pool, 'query').callsFake(async () => {
-        return Promise.resolve([createSuccessObj]);
+        return Promise.resolve(createSuccessObj);
       });
       const response = await create(createSuccessObj);
 
