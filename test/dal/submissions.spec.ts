@@ -109,9 +109,10 @@ describe('Submissions DAL', () => {
       invalidSubmission.monthly_price = 'a'.repeat(256);
       invalidSubmission.hostname = 'a-z!?';
 
-      expect(() => {
-        create(invalidSubmission);
-      }).to.throw(errInvalidArgs);
+      create(invalidSubmission).catch((err) => {
+        expect(err).to.equal(errInvalidArgs);
+        expect(err.message).to.equal('Invalid args');
+      });
     });
 
     it('should handle query connection error', async () => {
