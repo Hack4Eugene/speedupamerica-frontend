@@ -1,7 +1,6 @@
 import {pool} from './connection';
 import {logging} from '../common/logging';
 import {Submission, verifySubmission} from '../models/submission';
-import {errSubmissionCreate} from '../common/errors';
 
 async function getCount(): Promise<number> {
   const query = 'SELECT count(*) as count FROM submissions';
@@ -35,7 +34,6 @@ async function create(submission: Submission): Promise<Submission> {
       (err) => {
         if (err) {
           logging.error('Submission Create (Connection)', err);
-          throw errSubmissionCreate;
         }
       }
   );

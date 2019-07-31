@@ -15,7 +15,7 @@ const createSuccessObj = {
   zip_code: '97401',
   provider: 'Comcast',
   connected_with: 'WiFi',
-  monthly_price: '60.0',
+  monthly_price: '60',
   provider_down_speed: 25.0,
   rating: 6,
   ping: 200,
@@ -91,13 +91,6 @@ describe('Submissions DAL', () => {
       expect(response.rating).to.equal(6);
       expect(response.ping).to.equal(200);
       expect(response.hostname).to.equal('localhost');
-    });
-
-    it('should return error if query errs', async () => {
-      sandbox.stub(pool, 'query').rejects(errSubmissionCreate);
-      expect(() => {
-        create(createSuccessObj);
-      }).to.throw(errSubmissionCreate);
     });
   });
 });
