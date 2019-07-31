@@ -1,9 +1,10 @@
 import {pool} from '../../src/dal/connection';
 import {getCount, create} from '../../src/dal/submissions';
+import {errInvalidArgs, errConnectionRefused} from '../../src/common/errors';
+import {getConnectionDetails} from '../../src/dal/connection';
 import {expect} from 'chai';
 import {cloneDeep} from 'lodash';
 import * as sinon from 'sinon';
-import {errInvalidArgs, errConnectionRefused} from '../../src/common/errors';
 
 const createSuccessObj = {
   latitude: 44.065,
@@ -119,9 +120,13 @@ describe('Submissions DAL', () => {
       sandbox.stub(pool, 'query').callsFake(async () => {
         return errConnectionRefused;
       });
+
+      const {host, port} = getConnectionDetails();
+      const errMessage = 'connect ECONNREFUSED ' + host + ':' + port;
       create(createSuccessObj).catch((err) => {
         expect(err).to.equal(errConnectionRefused);
         expect(err.code).to.equal('ECONNREFUSED');
+        expect(err.message).to.equal(errMessage);
       });
     });
   });
