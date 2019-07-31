@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 const Joi = require('@hapi/joi');
 import {errInvalidArgs} from '../common/errors';
+import {logging} from '../common/logging';
 
 declare type Submission = {
     latitude: number | null,
@@ -41,6 +42,7 @@ const schema = Joi.object().keys({
 function verifySubmission(submission: Submission) {
   const result = Joi.validate(submission, schema);
   if (result.error) {
+    logging.error('Submission Create (Verify)', result.error.details);
     throw errInvalidArgs;
   }
   return true;
