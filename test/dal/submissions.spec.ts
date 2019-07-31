@@ -1,6 +1,5 @@
 import {pool} from '../../src/dal/connection';
 import {getCount, create} from '../../src/dal/submissions';
-import {errSubmissionCreate} from '../../src/common/errors';
 import {expect} from 'chai';
 import * as sinon from 'sinon';
 
