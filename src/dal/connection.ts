@@ -1,4 +1,4 @@
-import {errMissingConnDetails} from './errors';
+import {errMissingConnDetails} from '../common/errors';
 const mysql = require('mysql2/promise');
 
 const opts = getConnectionDetails();

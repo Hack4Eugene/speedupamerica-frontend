@@ -1,8 +1,6 @@
 import {pool} from '../../src/dal/connection';
 import {getCount, create} from '../../src/dal/submissions';
-import {errInvalidArgs} from '../../src/dal/errors';
-
-import {cloneDeep} from 'lodash';
+import {errSubmissionCreate} from '../../src/common/errors';
 import {expect} from 'chai';
 import * as sinon from 'sinon';
 
@@ -17,7 +15,7 @@ const createSuccessObj = {
   zip_code: '97401',
   provider: 'Comcast',
   connected_with: 'WiFi',
-  monthly_price: '60',
+  monthly_price: '60.0',
   provider_down_speed: 25.0,
   rating: 6,
   ping: 200,
@@ -59,77 +57,47 @@ describe('Submissions DAL', () => {
         expect(err.message).to.equal(fakeError.message);
       }
     });
+  }),
+
+  describe('create(submission)', () => {
+    let sandbox: sinon.SinonSandbox;
+
+    beforeEach(() => {
+      sandbox = sinon.createSandbox();
+    });
+
+    afterEach(() => {
+      sandbox.restore();
+    });
 
     it('should create submission successfully', async () => {
       sandbox.stub(pool, 'query').callsFake(async () => {
         return Promise.resolve([createSuccessObj]);
       });
       const response = await create(createSuccessObj);
-      expect(response).to.equal(createSuccessObj);
+
+      expect(response.latitude).to.equal(44.065);
+      expect(response.longitude).to.equal(-123.0941);
+      expect(response.accuracy).to.equal(50);
+      expect(response.address).to.equal('Eugene');
+      expect(response.actual_down_speed).to.equal(20.5);
+      expect(response.actual_upload_speed).to.equal(2.5);
+      expect(response.testing_for).to.equal('WiFi');
+      expect(response.zip_code).to.equal('97401');
+      expect(response.provider).to.equal('Comcast');
+      expect(response.connected_with).to.equal('WiFi');
+      expect(response.monthly_price).to.equal('60');
+      expect(response.provider_down_speed).to.equal(25.0);
+      expect(response.rating).to.equal(6);
+      expect(response.ping).to.equal(200);
+      expect(response.hostname).to.equal('localhost');
     });
 
-    it('should handle invalid latitude, longitude values', async () => {
-      sandbox.stub(pool, 'query').callsFake(async () => {
-        return Promise.reject(errInvalidArgs);
-      });
-
-      const invalidCoordinates = cloneDeep(createSuccessObj);
-      invalidCoordinates.latitude = -123.0941;
-      invalidCoordinates.longitude = 44.065;
-
-      try {
-        await create(invalidCoordinates);
-      } catch (err) {
-        expect(err).to.equal(errInvalidArgs);
-      }
-    });
-
-    it('should handle number values less than 0', async () => {
-      sandbox.stub(pool, 'query').callsFake(async () => {
-        return Promise.reject(errInvalidArgs);
-      });
-      const invalidNumberValues = cloneDeep(createSuccessObj);
-      invalidNumberValues.accuracy = -100;
-      invalidNumberValues.actual_down_speed = -100000;
-      invalidNumberValues.actual_upload_speed = -0.4;
-
-      try {
-        await create(invalidNumberValues);
-      } catch (err) {
-        expect(err).to.equal(errInvalidArgs);
-      }
-    });
-
-    it('should handle undefined string values', async () => {
-      sandbox.stub(pool, 'query').callsFake(async () => {
-        return Promise.reject(errInvalidArgs);
-      });
-      const undefinedStringValues = cloneDeep(createSuccessObj);
-      undefinedStringValues.testing_for = undefined;
-      undefinedStringValues.address = undefined;
-      undefinedStringValues.provider = undefined;
-
-      try {
-        await create(undefinedStringValues);
-      } catch (err) {
-        expect(err).to.equal(errInvalidArgs);
-      }
-    });
-
-    it('should handle empty string values', async () => {
-      sandbox.stub(pool, 'query').callsFake(async () => {
-        return Promise.reject(errInvalidArgs);
-      });
-      const emptyStringValues = cloneDeep(createSuccessObj);
-      emptyStringValues.testing_for = '';
-      emptyStringValues.address = '';
-      emptyStringValues.provider = '';
-
-      try {
-        await create(emptyStringValues);
-      } catch (err) {
-        expect(err).to.equal(errInvalidArgs);
-      }
+    it('should return error if query errs', async () => {
+      sandbox.stub(pool, 'query').rejects(errSubmissionCreate);
+      expect(() => {
+        create(createSuccessObj);
+      }).to.throw(errSubmissionCreate);
     });
   });
 });

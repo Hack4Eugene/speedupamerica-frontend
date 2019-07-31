@@ -7,6 +7,7 @@
     "start": "node ./dist/src/main.js",
     "start-dev": "nodemon -e ts,js,json -L --ignore dist/ --exec 'npm run build && npm start'",
     "lint": "eslint *.json src/*.ts src/**/*.ts test/*.spec.ts test/**/*.spec.ts",
+    "lint:fix": "eslint *.json src/*.ts src/**/*.ts test/*.spec.ts test/**/*.spec.ts --fix",
     "build": "tsc -p .",
     "check-types": "tsc",
     "test": "mocha -r ts-node/register --require source-map-support/register --recursive test/*.spec.ts test/**/*.spec.ts",
@@ -24,6 +25,7 @@
   },
   "homepage": "https://github.com/Hack4Eugene/speedupamerica-frontend#readme",
   "devDependencies": {
+    "@hapi/joi": "^15.1.0",
     "@types/chai": "^4.1.7",
     "@types/express": "^4.17.0",
     "@types/mocha": "^5.2.7",
