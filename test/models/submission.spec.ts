@@ -3,10 +3,7 @@ import {cloneDeep} from 'lodash';
 import {Submission, errInvalidArgs} from '../../src/models/submission';
 
 describe('Model Submission Class', () => {
-  let submissionClass: Submission;
-  before(() => {
-    submissionClass.getInstance();
-  });
+  const submissionClass = new Submission();
 
   const submissionObject = {
     latitude: 44.065,

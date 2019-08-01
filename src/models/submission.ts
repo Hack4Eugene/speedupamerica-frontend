@@ -4,15 +4,7 @@ import {errInvalidArgs} from '../common/errors';
 import {logging} from '../common/logging';
 import {create} from '../dal/submissions';
 
-let _instance: any;
-
 class Submission {
-  getInstance(): Submission {
-    if (_instance) return _instance;
-
-    _instance = new Submission();
-    return _instance;
-  }
 
   verifySubmission(submission: SubmissionType): boolean {
     const result = Joi.validate(submission, submissionSchema);
