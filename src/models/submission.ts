@@ -5,7 +5,6 @@ import {logging} from '../common/logging';
 import {create} from '../dal/submissions';
 
 class Submission {
-
   verifySubmission(submission: SubmissionType): boolean {
     const result = Joi.validate(submission, submissionSchema);
     if (result.error) {
