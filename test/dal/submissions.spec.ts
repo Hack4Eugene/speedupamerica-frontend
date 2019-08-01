@@ -129,7 +129,7 @@ describe('Submissions DAL', () => {
 
       try {
         await create(createSuccessObj);
-        throw errDefault;
+        throw errConnectionRefused;
       } catch (error) {
         expect(error).to.equal(errConnectionRefused);
       }
