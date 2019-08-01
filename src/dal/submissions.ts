@@ -1,5 +1,4 @@
 import {pool} from './connection';
-import {logging} from '../common/logging';
 import {Submission, verifySubmission} from '../models/submission';
 
 async function getCount(): Promise<number> {
@@ -30,10 +29,7 @@ async function create(submission: Submission): Promise<Submission> {
       [latitude, longitude, accuracy, actual_down_speed,
         actual_upload_speed, testing_for, address, zip_code,
         provider, connected_with, monthly_price,
-        provider_down_speed, rating, ping, hostname],
-      (err) => {
-        if (err) logging.error('Submission Create (Connection)', err);
-      }
+        provider_down_speed, rating, ping, hostname]
   );
 
   return result;
