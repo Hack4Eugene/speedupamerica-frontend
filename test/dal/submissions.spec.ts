@@ -137,7 +137,7 @@ describe('Submissions DAL', () => {
         return errDefault;
       });
       try {
-        const result = await create(createSuccessObj);
+        await create(createSuccessObj);
       } catch (error) {
         expect(error).to.equal(errDefault);
       }
