@@ -71,8 +71,6 @@ describe('Model Submission Class', () => {
 
   describe('create(submission) - ERROR', () => {
     it('should handle invalid submission', () => {
-      sandbox.stub(submissionClass, 'create').throws(errInvalidArgs);
-
       const invalidSubmission = cloneDeep(submissionObject);
       invalidSubmission.latitude = -123.0941;
       invalidSubmission.longitude = 44.065;
@@ -94,7 +92,9 @@ describe('Model Submission Class', () => {
     });
 
     it('should handle errors', () => {
-      sandbox.stub(submissionClass, 'create').throws(errDefault);
+      sandbox.stub(pool, 'query').callsFake(async () => {
+        return Promise.reject(errDefault);
+      });
 
       expect(() => {
         submissionClass.create(submissionObject);
