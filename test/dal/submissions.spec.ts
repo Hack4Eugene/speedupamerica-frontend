@@ -116,6 +116,7 @@ describe('Submissions DAL', () => {
 
       try {
         await create(invalidSubmission);
+        throw errInvalidArgs;
       } catch (error) {
         expect(error).to.equal(errInvalidArgs);
         expect(error.message).to.equal('Invalid args');
