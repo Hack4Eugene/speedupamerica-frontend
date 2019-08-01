@@ -18,7 +18,6 @@ class Submission {
     this.verifySubmission(submission);
 
     create(submission)
-        .then((res) => logging.info('Submission Created!', res))
         .catch((error) => logging.error('Submission Create', error));
 
     return true;

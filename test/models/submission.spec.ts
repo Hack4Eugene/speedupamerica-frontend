@@ -1,9 +1,12 @@
-import {expect} from 'chai';
 import {cloneDeep} from 'lodash';
 import {Submission, errInvalidArgs} from '../../src/models/submission';
+import {pool} from '../../src/dal/connection';
+import * as sinon from 'sinon';
+import {expect} from 'chai';
 
 describe('Model Submission Class', () => {
-  const submissionClass = new Submission();
+  let submissionClass: Submission;
+  let sandbox: sinon.SinonSandbox;
 
   const submissionObject = {
     latitude: 44.065,
@@ -23,13 +26,31 @@ describe('Model Submission Class', () => {
     hostname: 'localhost',
   };
 
+
+  beforeEach(() => {
+    sandbox = sinon.createSandbox();
+    submissionClass = new Submission();
+  });
+
+  afterEach(() => {
+    sandbox.restore();
+  });
+
   describe('create(submission) - SUCCESS', () => {
     it('should create submission', () => {
+      sandbox.stub(pool, 'query').callsFake(async () => {
+        return Promise.resolve(submissionObject);
+      });
+
       const result = submissionClass.create(submissionObject);
       expect(result).to.be.true;
     });
 
     it('should create submission with expected null values', () => {
+      sandbox.stub(pool, 'query').callsFake(async () => {
+        return Promise.resolve(expectedNullValue);
+      });
+
       const expectedNullValue = cloneDeep(submissionObject);
       expectedNullValue.accuracy = null;
       expectedNullValue.testing_for = null;
@@ -42,7 +63,7 @@ describe('Model Submission Class', () => {
       expectedNullValue.ping = null;
       expectedNullValue.hostname = null;
 
-      const result = submissionClass.verifySubmission(expectedNullValue);
+      const result = submissionClass.create(expectedNullValue);
       expect(result).to.be.true;
     });
   });
