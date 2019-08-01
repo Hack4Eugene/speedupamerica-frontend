@@ -114,10 +114,12 @@ describe('Submissions DAL', () => {
       invalidSubmission.monthly_price = 'a'.repeat(256);
       invalidSubmission.hostname = 'a-z!?';
 
-      create(invalidSubmission).catch((err) => {
-        expect(err).to.equal(errInvalidArgs);
-        expect(err.message).to.equal('Invalid args');
-      });
+      try {
+        await create(invalidSubmission);
+      } catch (error) {
+        expect(error).to.equal(errInvalidArgs);
+        expect(error.message).to.equal('Invalid args');
+      }
     });
 
     it('should handle query connection error', async () => {
@@ -127,6 +129,7 @@ describe('Submissions DAL', () => {
 
       try {
         await create(createSuccessObj);
+        throw errDefault;
       } catch (error) {
         expect(error).to.equal(errConnectionRefused);
       }
@@ -134,10 +137,12 @@ describe('Submissions DAL', () => {
 
     it('should handle query error', async () => {
       sandbox.stub(pool, 'query').callsFake(async () => {
-        return errDefault;
+        return Promise.reject(errDefault);
       });
+
       try {
         await create(createSuccessObj);
+        throw errDefault;
       } catch (error) {
         expect(error).to.equal(errDefault);
       }
