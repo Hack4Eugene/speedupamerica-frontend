@@ -100,6 +100,10 @@ describe('Submissions DAL', () => {
     });
 
     it('should handle invalid parameters', async () => {
+      sandbox.stub(pool, 'query').callsFake(async () => {
+        return Promise.reject(errInvalidArgs);
+      });
+
       const invalidSubmission = cloneDeep(createSuccessObj);
       invalidSubmission.latitude = -123.0941;
       invalidSubmission.longitude = 44.065;

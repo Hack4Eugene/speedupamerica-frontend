@@ -59,7 +59,6 @@ describe('Model Submission Class', () => {
       expectedNullValue.hostname = null;
 
       const result = submissionClass.create(expectedNullValue);
-      console.log(result);
       expect(result).to.be.true;
     });
   });
