@@ -2,8 +2,39 @@
 const Joi = require('@hapi/joi');
 import {errInvalidArgs} from '../common/errors';
 import {logging} from '../common/logging';
+import {create} from '../dal/submissions';
 
-declare type Submission = {
+let _instance: any;
+
+class Submission {
+  getInstance(): Submission {
+    if (_instance) return _instance;
+
+    _instance = new Submission();
+    return _instance;
+  }
+
+  verifySubmission(submission: SubmissionType): boolean {
+    const result = Joi.validate(submission, submissionSchema);
+    if (result.error) {
+      logging.error('Submission Create (Verify)', result.error.details);
+      throw errInvalidArgs;
+    }
+    return true;
+  }
+
+  create(submission: SubmissionType): boolean {
+    this.verifySubmission(submission);
+
+    create(submission)
+        .then((res) => logging.info('Submission Created!', res))
+        .catch((error) => logging.error('Submission Create', error));
+
+    return true;
+  }
+}
+
+declare type SubmissionType = {
     latitude: number | null,
     longitude: number | null,
     accuracy: number | null,
@@ -21,7 +52,7 @@ declare type Submission = {
     hostname: string | null
 };
 
-const schema = Joi.object().keys({
+const submissionSchema = Joi.object().keys({
   latitude: Joi.number().min(-90).max(90).allow(null),
   longitude: Joi.number().min(-180).max(180).allow(null),
   accuracy: Joi.number().min(0).max(4294967296).allow(null),
@@ -39,13 +70,4 @@ const schema = Joi.object().keys({
   hostname: Joi.string().hostname().allow(null),
 });
 
-function verifySubmission(submission: Submission) {
-  const result = Joi.validate(submission, schema);
-  if (result.error) {
-    logging.error('Submission Create (Verify)', result.error.details);
-    throw errInvalidArgs;
-  }
-  return true;
-}
-
-export {Submission, verifySubmission, errInvalidArgs};
+export {SubmissionType, Submission, errInvalidArgs};

@@ -1,5 +1,5 @@
 import {pool} from './connection';
-import {Submission, verifySubmission} from '../models/submission';
+import {SubmissionType} from '../models/submission';
 
 async function getCount(): Promise<number> {
   const query = 'SELECT count(*) as count FROM submissions';
@@ -7,9 +7,7 @@ async function getCount(): Promise<number> {
   return rows[0].count;
 }
 
-async function create(submission: Submission): Promise<Submission> {
-  verifySubmission(submission);
-
+async function create(submission: SubmissionType): Promise<SubmissionType> {
   const {
     latitude, longitude, accuracy, actual_down_speed,
     actual_upload_speed, testing_for, address, zip_code,

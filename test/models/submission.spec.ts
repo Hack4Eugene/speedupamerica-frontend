@@ -1,9 +1,14 @@
 import {expect} from 'chai';
 import {cloneDeep} from 'lodash';
-import {verifySubmission, errInvalidArgs} from '../../src/models/submission';
+import {Submission, errInvalidArgs} from '../../src/models/submission';
 
-describe('Model Submission', () => {
-  const submission = {
+describe('Model Submission Class', () => {
+  let submissionClass: Submission;
+  before(() => {
+    submissionClass.getInstance();
+  });
+
+  const submissionObject = {
     latitude: 44.065,
     longitude: -123.0941,
     accuracy: 50,
@@ -21,14 +26,14 @@ describe('Model Submission', () => {
     hostname: 'localhost',
   };
 
-  describe('verifySubmission(submission) - SUCCESS', () => {
-    it('should verify submission', () => {
-      const result = verifySubmission(submission);
+  describe('create(submission) - SUCCESS', () => {
+    it('should create submission', () => {
+      const result = submissionClass.create(submissionObject);
       expect(result).to.be.true;
     });
 
-    it('should verify submission with expected null values', () => {
-      const expectedNullValue = cloneDeep(submission);
+    it('should create submission with expected null values', () => {
+      const expectedNullValue = cloneDeep(submissionObject);
       expectedNullValue.accuracy = null;
       expectedNullValue.testing_for = null;
       expectedNullValue.address = null;
@@ -40,135 +45,182 @@ describe('Model Submission', () => {
       expectedNullValue.ping = null;
       expectedNullValue.hostname = null;
 
-      const result = verifySubmission(expectedNullValue);
+      const result = submissionClass.verifySubmission(expectedNullValue);
+      expect(result).to.be.true;
+    });
+  });
+
+  describe('create(submission) - ERROR', () => {
+    it('should handle invalid submission', () => {
+      const invalidSubmission = cloneDeep(submissionObject);
+      invalidSubmission.latitude = -123.0941;
+      invalidSubmission.longitude = 44.065;
+      invalidSubmission.accuracy = -1;
+      invalidSubmission.actual_down_speed = -1;
+      invalidSubmission.actual_upload_speed = -1;
+      invalidSubmission.ping = -1;
+      invalidSubmission.rating = 0;
+      invalidSubmission.testing_for = 'a'.repeat(256);
+      invalidSubmission.address = 'a'.repeat(256);
+      invalidSubmission.provider = 'a'.repeat(256);
+      invalidSubmission.connected_with = 'a'.repeat(256);
+      invalidSubmission.monthly_price = 'a'.repeat(256);
+      invalidSubmission.hostname = 'a-z!?';
+
+      expect(() => {
+        submissionClass.verifySubmission(invalidSubmission);
+      }).to.throw(errInvalidArgs);
+    });
+  });
+
+  describe('verifySubmission(submission) - SUCCESS', () => {
+    it('should verify submission', () => {
+      const result = submissionClass.verifySubmission(submissionObject);
+      expect(result).to.be.true;
+    });
+
+    it('should verify submission with expected null values', () => {
+      const expectedNullValue = cloneDeep(submissionObject);
+      expectedNullValue.accuracy = null;
+      expectedNullValue.testing_for = null;
+      expectedNullValue.address = null;
+      expectedNullValue.provider = null;
+      expectedNullValue.connected_with = null;
+      expectedNullValue.monthly_price = null;
+      expectedNullValue.provider_down_speed = null;
+      expectedNullValue.rating = null;
+      expectedNullValue.ping = null;
+      expectedNullValue.hostname = null;
+
+      const result = submissionClass.verifySubmission(expectedNullValue);
       expect(result).to.be.true;
     });
 
     it('should verify submission with ZIP_CODE [5 digit]', () => {
-      const zipCodeSubmission = cloneDeep(submission);
+      const zipCodeSubmission = cloneDeep(submissionObject);
       zipCodeSubmission.zip_code = '90210';
 
-      const result = verifySubmission(zipCodeSubmission);
+      const result = submissionClass.verifySubmission(zipCodeSubmission);
       expect(result).to.be.true;
     });
 
     it('should verify submission with ZIP_CODE+4 [9 digit]', () => {
-      const zipCodeSubmission = cloneDeep(submission);
+      const zipCodeSubmission = cloneDeep(submissionObject);
       zipCodeSubmission.zip_code = '90210-0210';
 
-      const result = verifySubmission(zipCodeSubmission);
+      const result = submissionClass.verifySubmission(zipCodeSubmission);
       expect(result).to.be.true;
     });
 
     it('should verify submission with hostname "localhost"', () => {
-      const hostnameSubmission = cloneDeep(submission);
+      const hostnameSubmission = cloneDeep(submissionObject);
       hostnameSubmission.hostname = 'localhost';
 
-      const result = verifySubmission(hostnameSubmission);
+      const result = submissionClass.verifySubmission(hostnameSubmission);
       expect(result).to.be.true;
     });
 
     it('should verify submission with hostname "127.0.0.1"', () => {
-      const hostnameSubmission = cloneDeep(submission);
+      const hostnameSubmission = cloneDeep(submissionObject);
       hostnameSubmission.hostname = '127.0.0.1';
 
-      const result = verifySubmission(hostnameSubmission);
+      const result = submissionClass.verifySubmission(hostnameSubmission);
       expect(result).to.be.true;
     });
   });
 
   describe('verifySubmission(submission) - ERROR', () => {
     it('should handle invalid coordinates', () => {
-      const invalidCoordinates = cloneDeep(submission);
+      const invalidCoordinates = cloneDeep(submissionObject);
       invalidCoordinates.latitude = -123.0941;
       invalidCoordinates.longitude = 44.065;
       expect(() => {
-        verifySubmission(invalidCoordinates);
+        submissionClass.verifySubmission(invalidCoordinates);
       }).to.throw(errInvalidArgs);
     });
 
     it('should handle invalid negative accuracy', () => {
-      const invalidSubmission = cloneDeep(submission);
+      const invalidSubmission = cloneDeep(submissionObject);
       invalidSubmission.accuracy = -1;
       expect(() => {
-        verifySubmission(invalidSubmission);
+        submissionClass.verifySubmission(invalidSubmission);
       }).to.throw(errInvalidArgs);
     });
 
     it('should handle invalid large accuracy', () => {
-      const invalidSubmission = cloneDeep(submission);
+      const invalidSubmission = cloneDeep(submissionObject);
       invalidSubmission.accuracy = 4294967296 + 1;
       expect(() => {
-        verifySubmission(invalidSubmission);
+        submissionClass.verifySubmission(invalidSubmission);
       }).to.throw(errInvalidArgs);
     });
 
     it('should handle invalid negative actual_down_speed', () => {
-      const invalidSubmission = cloneDeep(submission);
+      const invalidSubmission = cloneDeep(submissionObject);
       invalidSubmission.actual_down_speed = -1;
       expect(() => {
-        verifySubmission(invalidSubmission);
+        submissionClass.verifySubmission(invalidSubmission);
       }).to.throw(errInvalidArgs);
     });
 
     it('should handle invalid large actual_down_speed', () => {
-      const invalidSubmission = cloneDeep(submission);
+      const invalidSubmission = cloneDeep(submissionObject);
       invalidSubmission.actual_down_speed = 1.8446744e+19 + 1;
       expect(() => {
-        verifySubmission(invalidSubmission);
+        submissionClass.verifySubmission(invalidSubmission);
       }).to.throw(errInvalidArgs);
     });
 
     it('should handle invalid negative actual_upload_speed', () => {
-      const invalidSubmission = cloneDeep(submission);
+      const invalidSubmission = cloneDeep(submissionObject);
       invalidSubmission.actual_upload_speed = -1;
       expect(() => {
-        verifySubmission(invalidSubmission);
+        submissionClass.verifySubmission(invalidSubmission);
       }).to.throw(errInvalidArgs);
     });
 
     it('should handle invalid large actual_upload_speed', () => {
-      const invalidSubmission = cloneDeep(submission);
+      const invalidSubmission = cloneDeep(submissionObject);
       invalidSubmission.actual_upload_speed = 1.8446744e+19 + 1;
       expect(() => {
-        verifySubmission(invalidSubmission);
+        submissionClass.verifySubmission(invalidSubmission);
       }).to.throw(errInvalidArgs);
     });
 
     it('should handle invalid negative ping', () => {
-      const invalidSubmission = cloneDeep(submission);
+      const invalidSubmission = cloneDeep(submissionObject);
       invalidSubmission.ping = -1;
       expect(() => {
-        verifySubmission(invalidSubmission);
+        submissionClass.verifySubmission(invalidSubmission);
       }).to.throw(errInvalidArgs);
     });
 
     it('should handle invalid large ping', () => {
-      const invalidSubmission = cloneDeep(submission);
+      const invalidSubmission = cloneDeep(submissionObject);
       invalidSubmission.ping = 1.8446744e+19 + 1;
       expect(() => {
-        verifySubmission(invalidSubmission);
+        submissionClass.verifySubmission(invalidSubmission);
       }).to.throw(errInvalidArgs);
     });
 
     it('should handle invalid zero rating', () => {
-      const invalidSubmission = cloneDeep(submission);
+      const invalidSubmission = cloneDeep(submissionObject);
       invalidSubmission.rating = 0;
       expect(() => {
-        verifySubmission(invalidSubmission);
+        submissionClass.verifySubmission(invalidSubmission);
       }).to.throw(errInvalidArgs);
     });
 
     it('should handle invalid large rating', () => {
-      const invalidSubmission = cloneDeep(submission);
+      const invalidSubmission = cloneDeep(submissionObject);
       invalidSubmission.rating = 1.8446744e+19 + 1;
       expect(() => {
-        verifySubmission(invalidSubmission);
+        submissionClass.verifySubmission(invalidSubmission);
       }).to.throw(errInvalidArgs);
     });
 
     it('should handle invalid string values', () => {
-      const invalidSubmission = cloneDeep(submission);
+      const invalidSubmission = cloneDeep(submissionObject);
       invalidSubmission.testing_for = 'a'.repeat(256);
       invalidSubmission.address = 'a'.repeat(256);
       invalidSubmission.provider = 'a'.repeat(256);
@@ -176,16 +228,16 @@ describe('Model Submission', () => {
       invalidSubmission.monthly_price = 'a'.repeat(256);
 
       expect(() => {
-        verifySubmission(invalidSubmission);
+        submissionClass.verifySubmission(invalidSubmission);
       }).to.throw(errInvalidArgs);
     });
 
     it('should handle invalid hostname', () => {
-      const invalidSubmission = cloneDeep(submission);
+      const invalidSubmission = cloneDeep(submissionObject);
       invalidSubmission.hostname = 'a-z!?';
 
       expect(() => {
-        verifySubmission(invalidSubmission);
+        submissionClass.verifySubmission(invalidSubmission);
       }).to.throw(errInvalidArgs);
     });
   });
