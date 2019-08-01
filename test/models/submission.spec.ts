@@ -96,9 +96,12 @@ describe('Model Submission Class', () => {
         return Promise.reject(errDefault);
       });
 
-      expect(() => {
+      try {
         submissionClass.create(submissionObject);
-      }).to.throw(errDefault);
+      } catch (error) {
+        expect(error).to.equal(errDefault);
+        expect(error.message).to.equal('something went wrong');
+      }
     });
   });
 
