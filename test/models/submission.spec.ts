@@ -3,6 +3,7 @@ import {Submission, errInvalidArgs} from '../../src/models/submission';
 import * as sinon from 'sinon';
 import {expect} from 'chai';
 import {errDefault} from '../../src/common/errors';
+import {pool} from '../../src/dal/connection';
 
 describe('Model Submission Class', () => {
   let submissionClass: Submission;
@@ -38,14 +39,18 @@ describe('Model Submission Class', () => {
 
   describe('create(submission) - SUCCESS', () => {
     it('should create submission', () => {
-      sandbox.stub(submissionClass, 'create').returns(true);
+      sandbox.stub(pool, 'query').callsFake(async () => {
+        return Promise.resolve(submissionObject);
+      });
 
       const result = submissionClass.create(submissionObject);
       expect(result).to.be.true;
     });
 
     it('should create submission with expected null values', () => {
-      sandbox.stub(submissionClass, 'create').returns(true);
+      sandbox.stub(pool, 'query').callsFake(async () => {
+        return Promise.resolve(submissionObject);
+      });
 
       const expectedNullValue = cloneDeep(submissionObject);
       expectedNullValue.accuracy = null;
