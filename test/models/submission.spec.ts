@@ -1,6 +1,5 @@
 import {cloneDeep} from 'lodash';
 import {Submission, errInvalidArgs} from '../../src/models/submission';
-import {pool} from '../../src/dal/connection';
 import * as sinon from 'sinon';
 import {expect} from 'chai';
 
@@ -60,6 +59,7 @@ describe('Model Submission Class', () => {
       expectedNullValue.hostname = null;
 
       const result = submissionClass.create(expectedNullValue);
+      console.log(result);
       expect(result).to.be.true;
     });
   });
