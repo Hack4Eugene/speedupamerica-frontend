@@ -2,6 +2,7 @@ import {cloneDeep} from 'lodash';
 import {Submission, errInvalidArgs} from '../../src/models/submission';
 import * as sinon from 'sinon';
 import {expect} from 'chai';
+import {errDefault} from '../../src/common/errors';
 
 describe('Model Submission Class', () => {
   let submissionClass: Submission;
@@ -65,6 +66,8 @@ describe('Model Submission Class', () => {
 
   describe('create(submission) - ERROR', () => {
     it('should handle invalid submission', () => {
+      sandbox.stub(submissionClass, 'create').throws(errInvalidArgs);
+
       const invalidSubmission = cloneDeep(submissionObject);
       invalidSubmission.latitude = -123.0941;
       invalidSubmission.longitude = 44.065;
@@ -81,8 +84,16 @@ describe('Model Submission Class', () => {
       invalidSubmission.hostname = 'a-z!?';
 
       expect(() => {
-        submissionClass.verifySubmission(invalidSubmission);
+        submissionClass.create(invalidSubmission);
       }).to.throw(errInvalidArgs);
+    });
+
+    it('should handle errors', () => {
+      sandbox.stub(submissionClass, 'create').throws(errDefault);
+
+      expect(() => {
+        submissionClass.create(submissionObject);
+      }).to.throw(errDefault);
     });
   });
 

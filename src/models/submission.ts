@@ -18,7 +18,10 @@ class Submission {
     this.verifySubmission(submission);
 
     create(submission)
-        .catch((error) => logging.error('Submission Create', error));
+        .catch((error) => {
+          logging.error('Submission Create', error);
+          throw error;
+        });
 
     return true;
   }
