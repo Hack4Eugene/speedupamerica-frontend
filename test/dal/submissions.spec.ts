@@ -125,19 +125,22 @@ describe('Submissions DAL', () => {
         return Promise.reject(errConnectionRefused);
       });
 
-      const result = await create(createSuccessObj);
-
-      expect(result).to.equal(errConnectionRefused);
-      console.log(result);
+      try {
+        await create(createSuccessObj);
+      } catch (error) {
+        expect(error).to.equal(errConnectionRefused);
+      }
     });
 
     it('should handle query error', async () => {
       sandbox.stub(pool, 'query').callsFake(async () => {
         return errDefault;
       });
-
-      const result = create(createSuccessObj);
-      expect(result).to.equal(errDefault);
+      try {
+        const result = await create(createSuccessObj);
+      } catch (error) {
+        expect(error).to.equal(errDefault);
+      }
     });
   });
 });
