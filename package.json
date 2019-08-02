@@ -7,6 +7,7 @@
     "start": "node ./dist/main.js",
     "start-dev": "nodemon -e ts,js,json -L --ignore dist/ --exec 'npm run build && npm start'",
     "lint": "eslint *.json src/*.ts src/**/*.ts test/*.spec.ts test/**/*.spec.ts",
+    "lint:fix": "eslint *.json src/*.ts src/**/*.ts test/*.spec.ts test/**/*.spec.ts --fix",
     "build": "tsc -p .",
     "check-types": "tsc",
     "test": "mocha -r ts-node/register --require source-map-support/register --recursive test/*.spec.ts test/**/*.spec.ts",
@@ -46,8 +47,10 @@
     "winston-loggly-bulk": "^3.0.1"
   },
   "dependencies": {
+    "@hapi/joi": "^15.1.0",
     "express": "^4.17.1",
     "http-status-codes": "^1.3.2",
+    "lodash": "^4.17.15",
     "mysql2": "^1.6.5",
     "winston": "^3.2.1"
   },
