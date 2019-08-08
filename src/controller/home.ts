@@ -3,7 +3,7 @@ import * as HttpStatus from 'http-status-codes';
 
 function index(_req:Request, res:Response) {
   res.status(HttpStatus.OK);
-  res.send('home').render('home');
+  res.send('home');
 }
 
 export {index};
