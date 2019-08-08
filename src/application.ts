@@ -46,7 +46,7 @@ app.use((req:Request, res:Response, _next:NextFunction) => {
     res.render('404', {'status': 'error', 'error': 'not found'});
     return;
   }
-  res.render('404');
+  res.send('Not foud');
 });
 
 // Error handler
