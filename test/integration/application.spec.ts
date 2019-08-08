@@ -45,7 +45,7 @@ describe('Application', () => {
         .get('/test/doesnotexist')
         .set('Accept', 'text/html');
     expect(result.status).to.equal(HttpStatus.NOT_FOUND);
-    expect(result.text).to.equal('Not found');
+    expect(result.text).to.equal('404');
   });
 
   it('should 500 on GET /test/error', async () => {

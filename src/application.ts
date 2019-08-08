@@ -43,10 +43,10 @@ app.use((req:Request, res:Response, _next:NextFunction) => {
 
   // Handle json
   if (req.accepts('json')) {
-    res.render('404', {'status': 'error', 'error': 'not found'});
+    res.json({'status': 'error', 'error': 'not found'});
     return;
   }
-  res.send('Not found');
+  res.end('404');
 });
 
 // Error handler
