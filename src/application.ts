@@ -19,7 +19,6 @@ app.enable('trust proxy');
 app.set('views', path.join(__dirname, '/views'));
 app.engine('handlebars', handlebars({
   defaultLayout: 'index',
-  layoutsDir: path.join(__dirname, 'views/layouts'),
   partialsDir: path.join(__dirname, 'views/partials'),
 }));
 app.set('view engine', 'handlebars');
@@ -40,7 +39,7 @@ app.get('/test/exception', testController.exception);
 app.use((_req:Request, res:Response, _next:NextFunction) => {
   // @TODO create a nice 404 page and handle accepts header
   res = res.status(HttpStatus.NOT_FOUND);
-  res.status(404).render('404');
+  res.end('404');
 });
 
 // Error handler

@@ -15,7 +15,7 @@ describe('Home Controller', () => {
       expect(res.status.callCount).to.equal(1);
       expect(res.status.firstCall.args[0]).to.equal(HttpStatus.OK);
       expect(res.end.callCount).to.equal(1);
-      expect(res.end.firstCall.args[0]).to.equal('home');
+      expect(res.end.firstCall.args[0]).to.equal(index);
     });
   });
 });

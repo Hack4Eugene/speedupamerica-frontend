@@ -1,3 +1,7 @@
+html {
+  min-width: 500px;
+}
+
 body {
   padding: 0;
   margin: 0 auto;
@@ -6,7 +10,7 @@ body {
 
 header {
   width: auto;
-  height: 65px;
+  height: 50px;
   box-shadow: 0 0 5px rgb(153, 153, 153);
 }
 
@@ -17,7 +21,7 @@ nav {
 
 .logo {
   position: absolute;
-  padding: 10px;
+  padding: 5px;
 }
 
 .logo img {
@@ -25,11 +29,11 @@ nav {
 }
 
 .navlist {
-  height: 60px;
+  height: 50px;
   position: relative;
   display: block;
   float: right;
-  line-height: 65px;
+  line-height: 50px;
 }
 
 .navitem {
@@ -48,12 +52,9 @@ nav {
   color: #2867b2;
 }
 
-.secondary {
+.text-secondary {
+  font-size: 18px;
   color: #e0504d;
-}
-
-.text-title {
-  font-size: 20px;
 }
 
 .link {
@@ -64,8 +65,8 @@ nav {
   padding: 0 15px;
   background-color: #fff;
   border-radius: 24px;
-  border: none;
-  line-height: 34px;
+  border: 1px solid #e0504d;
+  line-height: 28px;
 }
 
 .button-secondary:hover {
@@ -81,7 +82,7 @@ nav {
 }
 
 .icon-img-white img {
-  height: 30px;
+  height: 24px;
   line-height: 20px;
   border-radius: 24px;
   vertical-align: middle;
@@ -95,7 +96,7 @@ nav {
 }
 
 .icon-img img {
-  height: 30px;
+  height: 24px;
   line-height: 20px;
   vertical-align: middle;
   top: -3px;
