@@ -38,8 +38,7 @@ app.get('/test/exception', testController.exception);
 // 404 handler
 app.use((_req:Request, res:Response, _next:NextFunction) => {
   // @TODO create a nice 404 page and handle accepts header
-  res = res.status(HttpStatus.NOT_FOUND);
-  res.end('404');
+  res.status(HttpStatus.NOT_FOUND).render('404');
 });
 
 // Error handler
