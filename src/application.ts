@@ -16,9 +16,9 @@ export const app = express();
 app.enable('trust proxy');
 
 // Express Handlebars
-app.set('views', path.join(__dirname, '/views/layouts'));
+app.set('views', path.join(__dirname, '/views'));
 app.engine('handlebars', handlebars({
-  defaultLayout: 'main',
+  defaultLayout: 'index',
   layoutsDir: path.join(__dirname, 'views/layouts'),
   partialsDir: path.join(__dirname, 'views/partials'),
 }));
@@ -37,16 +37,10 @@ app.get('/test/error', testController.error);
 app.get('/test/exception', testController.exception);
 
 // 404 handler
-app.use((req:Request, res:Response, _next:NextFunction) => {
+app.use((_req:Request, res:Response, _next:NextFunction) => {
   // @TODO create a nice 404 page and handle accepts header
   res = res.status(HttpStatus.NOT_FOUND);
-
-  // Handle json
-  if (req.accepts('json')) {
-    res.json({'status': 'error', 'error': 'not found'});
-    return;
-  }
-  res.end('404');
+  res.status(404).render('404');
 });
 
 // Error handler
