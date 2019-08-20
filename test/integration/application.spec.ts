@@ -2,7 +2,6 @@ import {app} from '../../src/application';
 import {expect} from 'chai';
 import * as request from 'supertest';
 import * as HttpStatus from 'http-status-codes';
-import {index} from '../../src/controller/home';
 
 describe('Application', () => {
   let server:any = null;
@@ -29,17 +28,17 @@ describe('Application', () => {
   it('should allow GET /', async () => {
     const result = await request(server).get('/');
     expect(result.status).to.equal(HttpStatus.OK);
-    expect(result.text).to.equal(index);
+    expect(result.notFound).to.be.false;
   });
 
   it('should JSON 404 on GET /test/doesnotexist', async () => {
     const result = await request(server)
         .get('/test/doesnotexist')
         .set('Accept', 'application/json');
-    console.log(result);
     expect(result.status).to.equal(HttpStatus.NOT_FOUND);
     expect(result.body.status).to.equal('error');
-    expect(result.body.error).to.equal('not found');
+    expect(result.body.error).to.equal('Not found');
+    expect(result.notFound).to.be.true;
   });
 
   it('should 404 on GET /test/doesnotexist', async () => {
@@ -47,7 +46,7 @@ describe('Application', () => {
         .get('/test/doesnotexist')
         .set('Accept', 'text/html');
     expect(result.status).to.equal(HttpStatus.NOT_FOUND);
-    expect(result.text).to.equal('404');
+    expect(result.notFound).to.be.true;
   });
 
   it('should 500 on GET /test/error', async () => {

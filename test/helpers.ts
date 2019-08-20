@@ -11,7 +11,8 @@ function stubResponse(): any {
   res.status = sinon.stub().returns(res);
   res.json = sinon.stub().returns(res);
   res.end = sinon.stub().returns(res);
-
+  res.render = sinon.stub().returns(res);
+  
   return res as Response;
 };
 

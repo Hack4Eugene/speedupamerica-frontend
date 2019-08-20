@@ -19,6 +19,7 @@ app.enable('trust proxy');
 app.set('views', path.join(__dirname, '/views'));
 app.engine('handlebars', handlebars({
   defaultLayout: 'index',
+  layoutsDir: path.join(__dirname, 'views/layouts'),
   partialsDir: path.join(__dirname, 'views/partials'),
 }));
 app.set('view engine', 'handlebars');
@@ -29,16 +30,23 @@ app.use(accessLogMiddleware());
 // Routes
 app.get('/health', healthController.health);
 app.get('/', homeController.index);
-app.use(express.static(path.join(__dirname, '/public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Test routes
 app.get('/test/error', testController.error);
 app.get('/test/exception', testController.exception);
 
 // 404 handler
-app.use((_req:Request, res:Response, _next:NextFunction) => {
+app.use((req:Request, res:Response, _next:NextFunction) => {
   // @TODO create a nice 404 page and handle accepts header
-  res.status(HttpStatus.NOT_FOUND).render('404');
+  res = res.status(HttpStatus.NOT_FOUND);
+
+  // Request expects json response
+  if (req.accepts('html', 'json') === 'json') {
+    res.json({'status': 'error', 'error': 'Not found'});
+    return;
+  }
+  res.render('404');
 });
 
 // Error handler
@@ -47,8 +55,8 @@ app.use((err:Error, req:Request, res:Response, _next:NextFunction) => {
 
   res = res.status(HttpStatus.INTERNAL_SERVER_ERROR);
 
-  // Handle json
-  if (req.accepts('json')) {
+  // Request expects json response
+  if (req.accepts('html', 'json') === 'json') {
     res.json({'status': 'error', 'error': err.message});
     return;
   }
