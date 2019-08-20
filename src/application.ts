@@ -2,6 +2,7 @@ import path = require('path');
 import express = require('express');
 import {Response, Request, NextFunction} from 'express';
 import handlebars = require('express-handlebars');
+import sassMiddleware = require('node-sass-middleware');
 import * as HttpStatus from 'http-status-codes';
 
 import {accessLogMiddleware} from './common/access_log';
@@ -17,12 +18,15 @@ app.enable('trust proxy');
 
 // Express Handlebars
 app.set('views', path.join(__dirname, '/views'));
-app.engine('handlebars', handlebars({
-  defaultLayout: 'index',
-  layoutsDir: path.join(__dirname, 'views/layouts'),
-  partialsDir: path.join(__dirname, 'views/partials'),
-}));
+app.engine('handlebars', handlebars({defaultLayout: 'index'}));
 app.set('view engine', 'handlebars');
+
+// Sass Setup
+app.use(sassMiddleware({
+  src: path.join(__dirname, '/sass'),
+  dest: path.join(__dirname, '/public'),
+  debug: true,
+}));
 
 // Setup access logs
 app.use(accessLogMiddleware());
