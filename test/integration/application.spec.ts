@@ -28,7 +28,7 @@ describe('Application', () => {
   it('should allow GET /', async () => {
     const result = await request(server).get('/');
     expect(result.status).to.equal(HttpStatus.OK);
-    expect(result.notFound).to.be.false;
+    expect(result.text.includes('Home')).to.be.true;
   });
 
   it('should JSON 404 on GET /test/doesnotexist', async () => {
