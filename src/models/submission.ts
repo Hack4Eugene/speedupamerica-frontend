@@ -20,7 +20,6 @@ class Submission {
     create(submission)
         .catch((error) => {
           logging.error('Submission Create', error);
-          throw error;
         });
 
     return true;

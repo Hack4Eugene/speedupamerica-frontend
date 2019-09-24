@@ -1,5 +1,8 @@
+import path = require('path');
 import express = require('express');
 import {Response, Request, NextFunction} from 'express';
+import handlebars = require('express-handlebars');
+import sassMiddleware = require('node-sass-middleware');
 import * as HttpStatus from 'http-status-codes';
 
 import {accessLogMiddleware} from './common/access_log';
@@ -13,12 +16,25 @@ export const app = express();
 // We want remote IP from LB's X-Forward-For header
 app.enable('trust proxy');
 
+// Express Handlebars
+app.set('views', path.join(__dirname, '/views'));
+app.engine('handlebars', handlebars({defaultLayout: 'index'}));
+app.set('view engine', 'handlebars');
+
+// Sass Setup
+app.use(sassMiddleware({
+  src: path.join(__dirname, '/sass'),
+  dest: path.join(__dirname, '/public'),
+  debug: true,
+}));
+
 // Setup access logs
 app.use(accessLogMiddleware());
 
 // Routes
 app.get('/health', healthController.health);
 app.get('/', homeController.index);
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Test routes
 app.get('/test/error', testController.error);
@@ -29,13 +45,12 @@ app.use((req:Request, res:Response, _next:NextFunction) => {
   // @TODO create a nice 404 page and handle accepts header
   res = res.status(HttpStatus.NOT_FOUND);
 
-  // Handle json
-  if (req.accepts('json')) {
-    res.json({'status': 'error', 'error': 'not found'});
+  // Request expects json response
+  if (req.accepts('html', 'json') === 'json') {
+    res.json({'status': 'error', 'error': 'Not found'});
     return;
   }
-
-  res.send('Not found');
+  res.render('404');
 });
 
 // Error handler
@@ -44,8 +59,8 @@ app.use((err:Error, req:Request, res:Response, _next:NextFunction) => {
 
   res = res.status(HttpStatus.INTERNAL_SERVER_ERROR);
 
-  // Handle json
-  if (req.accepts('json')) {
+  // Request expects json response
+  if (req.accepts('html', 'json') === 'json') {
     res.json({'status': 'error', 'error': err.message});
     return;
   }
