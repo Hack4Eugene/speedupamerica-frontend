@@ -6,7 +6,7 @@ function index(_req:Request, res:Response) {
 }
 
 function robots(_req:Request, res:Response) {
-  res.status(HttpStatus.OK).render('robots', {layout: false});
+  res.status(HttpStatus.OK).type('text').render('robots', {layout: false});
 }
 
 export {index, robots};

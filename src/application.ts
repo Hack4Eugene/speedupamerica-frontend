@@ -21,7 +21,7 @@ app.set('views', path.join(__dirname, '/views'));
 app.engine('handlebars', handlebars({defaultLayout: 'index'}));
 app.set('view engine', 'handlebars');
 // Give templates access to an {{isProduction}} boolean variable
-app.locals.isProduction = process.env.NODE_ENV === 'production';
+app.locals.isProduction = app.get('env') === 'production';
 
 // Sass Setup
 app.use(sassMiddleware({

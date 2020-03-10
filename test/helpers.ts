@@ -9,10 +9,11 @@ function stubRequest(): any  {
 function stubResponse(): any {
   const res:any = {};
   res.status = sinon.stub().returns(res);
+  res.type = sinon.stub().returns(res);
   res.json = sinon.stub().returns(res);
   res.end = sinon.stub().returns(res);
   res.render = sinon.stub().returns(res);
-  
+
   return res as Response;
 };
 
