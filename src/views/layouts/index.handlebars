@@ -3,11 +3,14 @@
 
   <head>
     <meta charset="utf-8">
+    {{#unless isProduction}}
+    <meta name="robots" content="noindex, nofollow">
+    {{/unless}}
     <link rel="stylesheet" type="text/css" href="/stylesheets/style.css" media="screen" />
     <title>SpeedUpAmerica</title>
   </head>
 
-  <body> 
+  <body>
       {{>header}}
       {{{body}}}
   </body>

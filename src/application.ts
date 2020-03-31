@@ -20,6 +20,8 @@ app.enable('trust proxy');
 app.set('views', path.join(__dirname, '/views'));
 app.engine('handlebars', handlebars({defaultLayout: 'index'}));
 app.set('view engine', 'handlebars');
+// Give templates access to an {{isProduction}} boolean variable
+app.locals.isProduction = app.get('env') === 'production';
 
 // Sass Setup
 app.use(sassMiddleware({
@@ -34,6 +36,7 @@ app.use(accessLogMiddleware());
 // Routes
 app.get('/health', healthController.health);
 app.get('/', homeController.index);
+app.get('/robots.txt', homeController.robots);
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Test routes
